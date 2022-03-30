@@ -47,7 +47,7 @@ const exclamation = require('./modules/write-good/exclamation.js');
 const general = require('./modules/write-good/general.js');
 const glossery = require('./modules/write-good/glossery.js');
 
-import { json } from 'express';
+// import { json } from 'express';
 // import multer from 'multer';
 import nextConnect from 'next-connect';
 import { VFile } from 'vfile';
@@ -474,7 +474,7 @@ const apiRoute = nextConnect({
         (output) => {
           // reporter(output);
           // res.send(String(output));
-          res.send(output);
+          res.json(output);
         },
         (error) => {
           // Handle your error here!
