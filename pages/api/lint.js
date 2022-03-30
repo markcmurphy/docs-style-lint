@@ -67,6 +67,8 @@ const apiRoute = nextConnect({
     res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
   },
 }).post((req, res) => {
+  console.log('🚀 ~ file: lint.js ~ line 70 ~ req', req);
+
   // const uploadMiddleware = upload.single('file');
 
   // apiRoute.use(uploadMiddleware);
@@ -455,18 +457,18 @@ const apiRoute = nextConnect({
           })
       )
       // plugin to enable, disable, and ignore messages.
-      .use(control, {
-        name: 'quality-docs',
-        source: [
-          'remark-lint',
-          // 'remark-lint-write-good',
-          'retext-readability',
-          'retext-simplify',
-          'retext-equality',
-          'retext-intensify',
-          'retext-google-styleguide',
-        ],
-      })
+      // .use(control, {
+      //   name: 'quality-docs',
+      //   source: [
+      //     'remark-lint',
+      //     // 'remark-lint-write-good',
+      //     'retext-readability',
+      //     'retext-simplify',
+      //     'retext-equality',
+      //     'retext-intensify',
+      //     'retext-google-styleguide',
+      //   ],
+      // })
       .process(filez)
       .then(
         (output) => {
