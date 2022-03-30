@@ -1,0 +1,15 @@
+{
+  "dictionaries": ["en_US-tech-industry.dic"],
+  "rules": {
+    "checks": "firstPerson"
+  },
+  "ignore": [
+    "address",
+    "attempt",
+    "capability",
+    "combined",
+    "contains",
+    "100x250",
+    "installable"
+  ]
+}
