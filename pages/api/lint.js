@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const argv = require('minimist')(process.argv.slice(2));
+// const argv = require('minimist')(process.argv.slice(2));
 const chalk = require('chalk');
 const en_US = require('dictionary-en-us');
 // const fs = require('fs');
