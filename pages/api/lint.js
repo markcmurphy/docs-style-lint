@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const _ = require('lodash');
 const argv = require('minimist')(process.argv.slice(2));
 const chalk = require('chalk');
@@ -512,10 +510,7 @@ const apiRoute = nextConnect({
 
   // let fileToCheck = new VFile(stream.toString('utf-8'));
   let fileToCheck = new VFile(req.body.toString('utf-8'));
-  // checkFile(fileToCheck.value);
-  res.json({
-    this: 'thing',
-  });
+  checkFile(fileToCheck.value);
 });
 
 export default apiRoute;
