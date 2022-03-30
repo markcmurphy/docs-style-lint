@@ -404,11 +404,11 @@ const apiRoute = nextConnect({
       //   checks: firstPerson,
       //   whitelist: ignoreWords,
       // })
-      .use(writeGood, {
-        checks: writeGoodExtension,
-        whitelist: ignoreWords.concat('In order to'),
-        // ignore: ignoreWords.concat(['in order to']),
-      })
+      // .use(writeGood, {
+      //   checks: writeGoodExtension,
+      //   whitelist: ignoreWords.concat('In order to'),
+      //   // ignore: ignoreWords.concat(['in order to']),
+      // })
       // TODO: consolidate some writeGood modules
       .use(
         remark2retext,
@@ -425,10 +425,10 @@ const apiRoute = nextConnect({
           //     'in order to',
           //   ]),
           // })
-          .use(writeGoodWordNode, {
-            whitelist: ignoreWords.concat(['as']),
-            checks: glossery,
-          })
+          // .use(writeGoodWordNode, {
+          //   whitelist: ignoreWords.concat(['as']),
+          //   checks: glossery,
+          // })
           .use(equality, {
             ignore: ignoreWords.concat([
               'just',
@@ -459,7 +459,7 @@ const apiRoute = nextConnect({
         name: 'quality-docs',
         source: [
           'remark-lint',
-          'remark-lint-write-good',
+          // 'remark-lint-write-good',
           'retext-readability',
           'retext-simplify',
           'retext-equality',
@@ -472,7 +472,7 @@ const apiRoute = nextConnect({
         (output) => {
           // reporter(output);
           // res.send(String(output));
-          res.json(output);
+          res.send(output);
         },
         (error) => {
           // Handle your error here!
