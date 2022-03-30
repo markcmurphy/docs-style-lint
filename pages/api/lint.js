@@ -1,6 +1,6 @@
 const _ = require('lodash');
 // const argv = require('minimist')(process.argv.slice(2));
-const chalk = require('chalk');
+// const chalk = require('chalk');
 const en_US = require('dictionary-en-us');
 // const fs = require('fs');
 // const lint = require('remark-lint-maximum-line-length');
@@ -33,17 +33,17 @@ const assuming = require('retext-assuming');
 const simplify = require('retext-simplify');
 
 // writeGood modules
-// const writeGoodWordNode = require('./modules/write-good/index.js');
-// const writeGood = require('remark-lint-write-good');
-// const writeGoodExtension = require('./modules/write-good/writeGoodExtension.js');
-// const firstPerson = require('./modules/write-good/firstPerson.js');
-// const genderBias = require('./modules/write-good/genderBias.js');
-// const dateFormat = require('./modules/write-good/dateFormat.js');
-// const ellipses = require('./modules/write-good/ellipses.js');
-// const emdash = require('./modules/write-good/emdash.js');
-// const exclamation = require('./modules/write-good/exclamation.js');
-// const general = require('./modules/write-good/general.js');
-// const glossery = require('./modules/write-good/glossery.js');
+const writeGoodWordNode = require('./modules/write-good/index.js');
+const writeGood = require('remark-lint-write-good');
+const writeGoodExtension = require('./modules/write-good/writeGoodExtension.js');
+const firstPerson = require('./modules/write-good/firstPerson.js');
+const genderBias = require('./modules/write-good/genderBias.js');
+const dateFormat = require('./modules/write-good/dateFormat.js');
+const ellipses = require('./modules/write-good/ellipses.js');
+const emdash = require('./modules/write-good/emdash.js');
+const exclamation = require('./modules/write-good/exclamation.js');
+const general = require('./modules/write-good/general.js');
+const glossery = require('./modules/write-good/glossery.js');
 
 // import { json } from 'express';
 // import multer from 'multer';
@@ -385,35 +385,35 @@ const apiRoute = nextConnect({
       //     baseUrl: 'https://developer.bigcommerce.com',
       //   },
       // })
-      // .use(writeGood, {
-      //   checks: dateFormat,
-      //   whitelist: ignoreWords,
-      // })
-      // .use(writeGood, {
-      //   checks: ellipses,
-      //   whitelist: ignoreWords,
-      // })
-      // .use(writeGood, {
-      //   checks: emdash,
-      //   whitelist: ignoreWords,
-      // })
-      // .use(writeGood, {
-      //   checks: exclamation,
-      //   whitelist: ignoreWords,
-      // })
-      // .use(writeGood, {
-      //   checks: general,
-      //   whitelist: ignoreWords,
-      // })
-      // .use(writeGood, {
-      //   checks: firstPerson,
-      //   whitelist: ignoreWords,
-      // })
-      // .use(writeGood, {
-      //   checks: writeGoodExtension,
-      //   whitelist: ignoreWords.concat('In order to'),
-      //   // ignore: ignoreWords.concat(['in order to']),
-      // })
+      .use(writeGood, {
+        checks: dateFormat,
+        whitelist: ignoreWords,
+      })
+      .use(writeGood, {
+        checks: ellipses,
+        whitelist: ignoreWords,
+      })
+      .use(writeGood, {
+        checks: emdash,
+        whitelist: ignoreWords,
+      })
+      .use(writeGood, {
+        checks: exclamation,
+        whitelist: ignoreWords,
+      })
+      .use(writeGood, {
+        checks: general,
+        whitelist: ignoreWords,
+      })
+      .use(writeGood, {
+        checks: firstPerson,
+        whitelist: ignoreWords,
+      })
+      .use(writeGood, {
+        checks: writeGoodExtension,
+        whitelist: ignoreWords.concat('In order to'),
+        //   // ignore: ignoreWords.concat(['in order to']),
+      })
       // TODO: consolidate some writeGood modules
       .use(
         remark2retext,
@@ -421,19 +421,19 @@ const apiRoute = nextConnect({
           // TODO: configure readability thresholds to make it useful
           // .use(readability, readabilityConfig || {})
           // TODO: configure simplify to be less sensitive
-          // .use(simplify, {
-          //   ignore: ignoreWords.concat([
-          //     'multiple',
-          //     'render',
-          //     'forward',
-          //     'should',
-          //     'in order to',
-          //   ]),
-          // })
-          // .use(writeGoodWordNode, {
-          //   whitelist: ignoreWords.concat(['as']),
-          //   checks: glossery,
-          // })
+          .use(simplify, {
+            ignore: ignoreWords.concat([
+              'multiple',
+              'render',
+              'forward',
+              'should',
+              'in order to',
+            ]),
+          })
+          .use(writeGoodWordNode, {
+            whitelist: ignoreWords.concat(['as']),
+            checks: glossery,
+          })
           .use(equality, {
             ignore: ignoreWords.concat([
               'just',
