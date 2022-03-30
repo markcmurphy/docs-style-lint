@@ -376,7 +376,7 @@ const apiRoute = nextConnect({
     remark()
       // TODO: fix MD lint rules
       // .use(linterRules)
-      .use(validateLinks, {})
+      // .use(validateLinks, {})
       // .use(validateExternalLinks, {
       //   skipLocalhost: true,
       //   skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
@@ -515,10 +515,7 @@ const apiRoute = nextConnect({
 
   // let fileToCheck = new VFile(stream.toString('utf-8'));
   let fileToCheck = new VFile(req.body.toString('utf-8'));
-  console.log(
-    '🚀 ~ file: lint.js ~ line 520 ~ //handler ~ checkFile(fileToCheck.value)',
-    checkFile(fileToCheck.value)
-  );
+
   checkFile(fileToCheck.value);
 });
 
