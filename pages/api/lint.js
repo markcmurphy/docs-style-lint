@@ -49,7 +49,7 @@ const simplify = require('retext-simplify');
 // import multer from 'multer';
 import nextConnect from 'next-connect';
 import { VFile } from 'vfile';
-import { reporter } from 'vfile-reporter';
+// import { reporter } from 'vfile-reporter';
 
 // const storage = multer.memoryStorage();
 
@@ -67,7 +67,7 @@ const apiRoute = nextConnect({
     res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
   },
 }).post((req, res) => {
-  console.log('🚀 ~ file: lint.js ~ line 70 ~ req', req);
+  console.log('🚀 ~ file: lint.js ~ line 70 ~ req', req.body);
 
   // const uploadMiddleware = upload.single('file');
 
@@ -153,6 +153,8 @@ const apiRoute = nextConnect({
   var dictionary = en_US;
 
   var myReadFile = function (dictPath, cb) {
+    console.log('🚀 ~ file: lint.js ~ line 161 ~ myReadFile ~ myReadFile');
+
     fs.readFile(dictPath, function (err, buffer) {
       cb(err, !err && buffer);
     });
@@ -370,6 +372,7 @@ const apiRoute = nextConnect({
   // const stream = req.file.buffer;
 
   function checkFile(filez) {
+    console.log('🚀 ~ file: lint.js ~ line 375 ~ checkFile ~ filez', filez);
     remark()
       // TODO: fix MD lint rules
       // .use(linterRules)
@@ -512,6 +515,10 @@ const apiRoute = nextConnect({
 
   // let fileToCheck = new VFile(stream.toString('utf-8'));
   let fileToCheck = new VFile(req.body.toString('utf-8'));
+  console.log(
+    '🚀 ~ file: lint.js ~ line 520 ~ //handler ~ checkFile(fileToCheck.value)',
+    checkFile(fileToCheck.value)
+  );
   checkFile(fileToCheck.value);
 });
 
