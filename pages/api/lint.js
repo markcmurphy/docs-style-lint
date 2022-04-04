@@ -59,6 +59,7 @@ import { VFile } from 'vfile';
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
+    console.log('🚀 ~ file: lint.js ~ line 62 ~ onError ~ error', error);
     res
       .status(501)
       .json({ error: `Sorry something Happened! ${error.message}` });
@@ -67,8 +68,6 @@ const apiRoute = nextConnect({
     res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
   },
 }).post((req, res) => {
-  console.log('🚀 ~ file: lint.js ~ line 70 ~ req', req.body);
-
   // const uploadMiddleware = upload.single('file');
 
   // apiRoute.use(uploadMiddleware);
@@ -193,23 +192,23 @@ const apiRoute = nextConnect({
   //   return value;
   // });
 
-  // var fatalRules = _.keys(
-  //   _.pickBy(config.rules, function (value) {
-  //     return value.severity == 'fatal';
-  //   })
-  // );
+  var fatalRules = _.keys(
+    _.pickBy(config.rules, function (value) {
+      return value.severity == 'fatal';
+    })
+  );
 
-  // var warnRules = _.keys(
-  //   _.pickBy(config.rules, function (value) {
-  //     return value && (value.severity == 'warn' || !value.severity);
-  //   })
-  // );
+  var warnRules = _.keys(
+    _.pickBy(config.rules, function (value) {
+      return value && (value.severity == 'warn' || !value.severity);
+    })
+  );
 
-  // var suggestRules = _.keys(
-  //   _.pickBy(config.rules, function (value) {
-  //     return value.severity == 'suggest';
-  //   })
-  // );
+  var suggestRules = _.keys(
+    _.pickBy(config.rules, function (value) {
+      return value.severity == 'suggest';
+    })
+  );
 
   const linterRules = [
     require('remark-lint'),
@@ -369,86 +368,124 @@ const apiRoute = nextConnect({
   //
   // }
 
-  // const stream = req.file.buffer;
+  let fileToCheck = new VFile(req.body.toString('utf-8'));
+  let docFiles = [];
+  docFiles.push(fileToCheck);
 
-  function checkFile(filez) {
-    console.log('🚀 ~ file: lint.js ~ line 375 ~ checkFile ~ filez', filez);
+  // map(docFiles, toVFile.read, function (err, files) {
+
+  map(docFiles, checkFile, function (err, results) {
+    // results[0].messages?.forEach((message) => {
+    //   console.log(message);
+    // });
+    // console.log('🚀 ~ file: lint.js ~ line 377 ~ err', err);
+    var hasErrors = false;
+    // report(err || results, {
+    //   silent: silent,
+    // })
+    // res.send(
+    // const resReport = report(err || results, {
+    //   silent: silent,
+    // });
+    let resSendArr = [];
+    // console.log(results);
+
+    results.forEach((result) => {
+      result.messages.forEach((message) => {
+        resSendArr.push(message);
+      });
+    });
+    res.send(resSendArr);
+    // );
+
+    // Check for errors and exit with error code if found
+    results.forEach((result) => {
+      result.messages.forEach((message) => {
+        if (message.fatal) hasErrors = true;
+      });
+    });
+    if (hasErrors) process.exit(1);
+  });
+
+  function checkFile(filez, cb) {
+    // console.log('🚀 ~ file: lint.js ~ line 398 ~ checkFile ~ filez', filez);
+
     remark()
       // TODO: fix MD lint rules
       // .use(linterRules)
-      .use(validateLinks, {})
-      .use(validateExternalLinks, {
-        skipLocalhost: true,
-        skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
-        gotOptions: {
-          // baseUrl: 'https://developer-beta.bigcommerce.com',
-          baseUrl: 'https://developer.bigcommerce.com',
-        },
-      })
-      .use(writeGood, {
-        checks: dateFormat,
-        whitelist: ignoreWords,
-      })
-      .use(writeGood, {
-        checks: ellipses,
-        whitelist: ignoreWords,
-      })
-      .use(writeGood, {
-        checks: emdash,
-        whitelist: ignoreWords,
-      })
-      .use(writeGood, {
-        checks: exclamation,
-        whitelist: ignoreWords,
-      })
+      // .use(validateLinks, {})
+      // .use(validateExternalLinks, {
+      //   skipLocalhost: true,
+      //   skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
+      //   gotOptions: {
+      //     // baseUrl: 'https://developer-beta.bigcommerce.com',
+      //     baseUrl: 'https://developer.bigcommerce.com',
+      //   },
+      // })
       .use(writeGood, {
         checks: general,
         whitelist: ignoreWords,
       })
-      .use(writeGood, {
-        checks: firstPerson,
-        whitelist: ignoreWords,
-      })
-      .use(writeGood, {
-        checks: writeGoodExtension,
-        whitelist: ignoreWords.concat('In order to'),
-        //   // ignore: ignoreWords.concat(['in order to']),
-      })
+      // .use(writeGood, {
+      //   checks: dateFormat,
+      //   whitelist: ignoreWords,
+      // })
+      // .use(writeGood, {
+      //   checks: ellipses,
+      //   whitelist: ignoreWords,
+      // })
+      // .use(writeGood, {
+      //   checks: emdash,
+      //   whitelist: ignoreWords,
+      // })
+      // .use(writeGood, {
+      //   checks: exclamation,
+      //   whitelist: ignoreWords,
+      // })
+      // .use(writeGood, {
+      //   checks: firstPerson,
+      //   whitelist: ignoreWords,
+      // })
+      // .use(writeGood, {
+      //   checks: writeGoodExtension,
+      //   whitelist: ignoreWords.concat('In order to'),
+      //   //   // ignore: ignoreWords.concat(['in order to']),
+      // })
       // TODO: consolidate some writeGood modules
       .use(
         remark2retext,
         retext() // Convert markdown to plain text
-          // TODO: configure readability thresholds to make it useful
-          // .use(readability, readabilityConfig || {})
-          // TODO: configure simplify to be less sensitive
-          // .use(simplify, {
-          //   ignore: ignoreWords.concat([
-          //     'multiple',
-          //     'render',
-          //     'forward',
-          //     'should',
-          //     'in order to',
-          //   ]),
-          // })
-          .use(writeGoodWordNode, {
-            whitelist: ignoreWords.concat(['as']),
-            checks: glossery,
-          })
-          .use(equality, {
-            ignore: ignoreWords.concat([
-              'just',
-              'easy',
-              'disable',
-              'disabled',
-              'host',
-            ]),
-          })
-          .use(syntaxURLS)
-          // .use(intensify, {
-          //   ignore: ignoreWords.concat([]),
-          // })
-          .use(repeatedWords)
-          .use(indefiniteArticles)
+        // TODO: configure readability thresholds to make it useful
+        // .use(readability, readabilityConfig || {})
+        // TODO: configure simplify to be less sensitive
+        // .use(simplify, {
+        //   ignore: ignoreWords.concat([
+        //     'multiple',
+        //     'render',
+        //     'forward',
+        //     'should',
+        //     'in order to',
+        //   ]),
+        // })
+        // .use(writeGoodWordNode, {
+        //   whitelist: ignoreWords.concat(['as']),
+        //   checks: glossery,
+        // })
+        // .use(equality, {
+        //   ignore: ignoreWords.concat([
+        //     'just',
+        //     'easy',
+        //     'disable',
+        //     'disabled',
+        //     'host',
+        //   ]),
+        // })
+        // .use(syntaxURLS)
+        // .use(intensify, {
+        //   ignore: ignoreWords.concat([]),
+        // })
+        // .use(repeatedWords)
+        // .use(indefiniteArticles)
         // .use(assuming, {
         //   ignore: ignoreWords.concat([]),
         // })
@@ -472,24 +509,49 @@ const apiRoute = nextConnect({
       //     'retext-google-styleguide',
       //   ],
       // })
-      .process(filez)
-      .then(
-        (output) => {
-          // reporter(output);
-          // res.send(String(output));
-          res.send(output);
-        },
-        (error) => {
-          // Handle your error here!
-          throw error;
-        }
-      );
+      .process(filez, function (err, results) {
+        var filteredMessages = [];
+        results.messages.forEach((message) => {
+          var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
+          var hasFatalSource = _.includes(fatalRules, message.source);
+          var hasSuggestedRuleId = _.includes(suggestRules, message.ruleId);
+          var hasSuggestedSource = _.includes(suggestRules, message.source);
+
+          if (suggestRules && (hasSuggestedRuleId || hasSuggestedSource)) {
+            message.message = message.message.replace(
+              /don\’t use “(.*)”/gi,
+              (match, word) => {
+                return 'Use “' + word + '” sparingly';
+              }
+            );
+            delete message.fatal;
+          }
+
+          if (fatalRules && (hasFatalRuleId || hasFatalSource)) {
+            message.fatal = true;
+          }
+
+          filteredMessages.push(message);
+        });
+        results.messages = filteredMessages;
+        // console.log('🚀 ~ file: lint.js ~ line 525 ~ results', results);
+        cb(null, results);
+      });
   }
 
   // let fileToCheck = new VFile(stream.toString('utf-8'));
-  let fileToCheck = new VFile(req.body.toString('utf-8'));
+  // let fileToCheck = new VFile(req.body.toString('utf-8'));
 
-  checkFile(fileToCheck.value);
+  // checkFile(fileToCheck, function (err, results) {
+  //   console.log('🚀 ~ file: lint.js ~ line 519 ~ err', err);
+  //   console.log('🚀 ~ file: lint.js ~ line 519 ~ results', results.messages);
+  //   // report(err || results, {
+  //   //   silent: silent,
+  //   // });
+  // });
+  // });
+
+  // checkFile(fileToCheck.value);
 });
 
 export default apiRoute;

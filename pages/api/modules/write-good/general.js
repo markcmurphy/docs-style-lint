@@ -3,6 +3,7 @@ module.exports = {
     fn: function (text) {
       var re = /\s[^\s-]+ly-/gi;
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -18,12 +19,14 @@ module.exports = {
     fn: function (text) {
       var re = /\b\w+\(s\)/gi;
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
           offset: match[0].length,
         });
       }
+      // console.log('🚀 ~ file: general.js ~ line 33 ~ suggestions', suggestions);
       return suggestions;
     },
     explanation:
@@ -33,6 +36,7 @@ module.exports = {
     fn: function (text) {
       var re = /\d+(?:st|nd|rd|th)/gi;
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -77,6 +81,7 @@ module.exports = {
     fn: function (text) {
       var re = /"[^"]+"[.,?]/gi;
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -92,6 +97,7 @@ module.exports = {
     fn: function (text) {
       var re = /(?:from|between)\s\d+\s?-\s?\d+/gi;
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -108,6 +114,7 @@ module.exports = {
     fn: function (text) {
       var positives = ['[a-z][.?!] {2,}[A-Z]', '[a-z][.?!] {2,}[A-Z]'];
       var suggestions = [];
+      let match;
       var re = new RegExp(positives.join('|'), 'gi');
       while ((match = re.exec(text))) {
         suggestions.push({
@@ -124,6 +131,7 @@ module.exports = {
     fn: function (text) {
       var positives = ['\\d+(?:B|kB|MB|GB|TB)', '\\d+(?:ns|ms|s|min|h|d)'];
       var suggestions = [];
+      let match;
       var re = new RegExp(positives.join('|'), 'gi');
       while ((match = re.exec(text))) {
         suggestions.push({

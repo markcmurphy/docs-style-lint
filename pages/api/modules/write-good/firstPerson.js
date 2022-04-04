@@ -1,6 +1,8 @@
 module.exports = {
   firstPerson: {
     fn: function (text) {
+      console.log('🚀 ~ file: firstPerson.js ~ line 4 ~ text', text);
+
       var positives = [
         '(?:^|\\s)I\\s',
         '(?:^|\\s)I,\\s',

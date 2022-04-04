@@ -48,17 +48,17 @@ const StyledLabel = styled.label`
 function ListItem({ value }) {
   return (
     <li>
-      <b>Line:</b> {value.line} <b>Message:</b> {value.message}
+      <b>Line:</b> {value.line} <br/><b>Message:</b> {value.message}
     </li>
   );
 }
 
 function NumberList(props) {
   const numbers = props.numbers;
-  const listItems = numbers.messages?.map((number, index) => (
+  const listItems = numbers.map((number, index) => (
     <ListItem key={index} value={number} />
   ));
-  return <ol>{listItems}</ol>;
+  return <ul>{listItems}</ul>;
 }
 
 const SignupForm = () => {
@@ -67,7 +67,9 @@ const SignupForm = () => {
   const [selectedFile, setSelectedFile] = useState();
   const [isSelected, setIsSelected] = useState(false);
   const [formBody, setFormBody] = useState('code');
-  const [code, setCode] = useState('# code');
+  const [code, setCode] = useState(`# The B2B Edition of BigCommercely
+
+BundleB2B (B3) add(s) business-to-business (B2B) functionality to the BigCommerce platform, allowing businesses to easily facilitate B2B operations online. B3 provides a comprehensive suite of key B2B features to improve the B2B self-service experience for BigCommerce store owners and their customers.`);
   // const [codeValue, setCodeValue] = useState(code);
 
   const MyTextInput = ({ label, ...props }) => {
