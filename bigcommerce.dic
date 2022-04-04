@@ -36,6 +36,8 @@ HostGator/M
 FileZilla/M
 Cloudways/M
 crontab
+B3
+Salesforce
 
 /[0-9]+x[0-9]+/gm
 # markdown-spellcheck spelling configuration file

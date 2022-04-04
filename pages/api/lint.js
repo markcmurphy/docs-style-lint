@@ -193,23 +193,23 @@ const apiRoute = nextConnect({
   //   return value;
   // });
 
-  var fatalRules = _.keys(
-    _.pickBy(config.rules, function (value) {
-      return value.severity == 'fatal';
-    })
-  );
+  // var fatalRules = _.keys(
+  //   _.pickBy(config.rules, function (value) {
+  //     return value.severity == 'fatal';
+  //   })
+  // );
 
-  var warnRules = _.keys(
-    _.pickBy(config.rules, function (value) {
-      return value && (value.severity == 'warn' || !value.severity);
-    })
-  );
+  // var warnRules = _.keys(
+  //   _.pickBy(config.rules, function (value) {
+  //     return value && (value.severity == 'warn' || !value.severity);
+  //   })
+  // );
 
-  var suggestRules = _.keys(
-    _.pickBy(config.rules, function (value) {
-      return value.severity == 'suggest';
-    })
-  );
+  // var suggestRules = _.keys(
+  //   _.pickBy(config.rules, function (value) {
+  //     return value.severity == 'suggest';
+  //   })
+  // );
 
   const linterRules = [
     require('remark-lint'),
@@ -376,15 +376,15 @@ const apiRoute = nextConnect({
     remark()
       // TODO: fix MD lint rules
       // .use(linterRules)
-      // .use(validateLinks, {})
-      // .use(validateExternalLinks, {
-      //   skipLocalhost: true,
-      //   skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
-      //   gotOptions: {
-      //     // baseUrl: 'https://developer-beta.bigcommerce.com',
-      //     baseUrl: 'https://developer.bigcommerce.com',
-      //   },
-      // })
+      .use(validateLinks, {})
+      .use(validateExternalLinks, {
+        skipLocalhost: true,
+        skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
+        gotOptions: {
+          // baseUrl: 'https://developer-beta.bigcommerce.com',
+          baseUrl: 'https://developer.bigcommerce.com',
+        },
+      })
       .use(writeGood, {
         checks: dateFormat,
         whitelist: ignoreWords,
@@ -421,15 +421,15 @@ const apiRoute = nextConnect({
           // TODO: configure readability thresholds to make it useful
           // .use(readability, readabilityConfig || {})
           // TODO: configure simplify to be less sensitive
-          .use(simplify, {
-            ignore: ignoreWords.concat([
-              'multiple',
-              'render',
-              'forward',
-              'should',
-              'in order to',
-            ]),
-          })
+          // .use(simplify, {
+          //   ignore: ignoreWords.concat([
+          //     'multiple',
+          //     'render',
+          //     'forward',
+          //     'should',
+          //     'in order to',
+          //   ]),
+          // })
           .use(writeGoodWordNode, {
             whitelist: ignoreWords.concat(['as']),
             checks: glossery,
@@ -449,15 +449,15 @@ const apiRoute = nextConnect({
           // })
           .use(repeatedWords)
           .use(indefiniteArticles)
-          // .use(assuming, {
-          //   ignore: ignoreWords.concat([]),
-          // })
-          // TODO: have spell not check URLS or file names
-          .use(spell, {
-            dictionary: dictionary,
-            ignore: ignoreWords.concat([]),
-            ignoreLiteral: true,
-          })
+        // .use(assuming, {
+        //   ignore: ignoreWords.concat([]),
+        // })
+        // TODO: have spell not check URLS or file names
+        // .use(spell, {
+        //   dictionary: dictionary,
+        //   ignore: ignoreWords.concat([]),
+        //   ignoreLiteral: true,
+        // })
       )
       // plugin to enable, disable, and ignore messages.
       // .use(control, {
@@ -484,33 +484,6 @@ const apiRoute = nextConnect({
           throw error;
         }
       );
-    // function (err, results) {
-    //   var filteredMessages = [];
-    //   results.messages.forEach((message) => {
-    //     filteredMessages.push(message);
-    //   });
-
-    //   var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
-    //   var hasFatalSource = _.includes(fatalRules, message.source);
-    //   var hasSuggestedRuleId = _.includes(suggestRules, message.ruleId);
-    //   var hasSuggestedSource = _.includes(suggestRules, message.source);
-
-    //   if (suggestRules && (hasSuggestedRuleId || hasSuggestedSource)) {
-    //     message.message = message.message.replace(
-    //       /don\’t use “(.*)”/gi,
-    //       (match, word) => {
-    //         return 'Use “' + word + '” sparingly';
-    //       }
-    //     );
-    //     delete message.fatal;
-    //   }
-
-    //   if (fatalRules && (hasFatalRuleId || hasFatalSource)) {
-    //     message.fatal = true;
-    //   }
-    // }
-    // );
-    // res.send(filteredMessages);
   }
 
   // let fileToCheck = new VFile(stream.toString('utf-8'));

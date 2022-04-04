@@ -205,8 +205,9 @@ input[type="number"] {
   input[type="email"]::placeholder,
   input[type="text"]::placeholder,
   input[type="number"]::placeholder,
-  select,
-  textarea {
+  /* textarea,  */
+  select
+  {
     color: var(--gray-500);
   }
 }
@@ -214,7 +215,7 @@ input[type="number"] {
 input[type="email"],
 input[type="text"],
 input[type="number"],
-textarea,
+/* textarea, */
 select {
   width: 400px;
 }
@@ -245,7 +246,7 @@ select {
   }
 }
 
-textarea {
+/* textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -260,19 +261,20 @@ textarea {
   font-family: -apple-system, BlinkMacSystemFont, "avenir next", avenir,
     "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
     sans-serif;
-}
+} */
 
 @media (prefers-color-scheme: dark) {
-  textarea {
+  /* textarea {
     background-color: var(--gray-800);
     border-color: var(--gray-700);
     color: white;
-  }
+  } */
 }
 
 input:focus,
-select:focus,
-textarea:focus {
+/* textarea:focus  */
+select:focus
+{
   outline: none;
   border: 2px solid var(--focus-ring-color);
 }
