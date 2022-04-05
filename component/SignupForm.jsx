@@ -45,6 +45,7 @@ const StyledLabel = styled.label`
 //   );
 // };
 
+// TODO: return results as table
 function ListItem({ value }) {
   return (
     <li>

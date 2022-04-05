@@ -1,30 +1,32 @@
 module.exports = {
   graduate: {
     fn: function (text) {
-      var positives = ["(?:alumna|alumnus)"];
+      var positives = ['(?:alumna|alumnus)'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
-      while (match = re.exec(text)) {
+      let match;
+      while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
           offset: match[0].length,
         });
       }
-      // let word; 
+      // let word;
       // while ((word = re.exec(text)) !== null) {
       //   let msg = word[0];
       //   console.log(msg);
       // }
       return suggestions;
     },
-    explanation: 'Please use "graduate" instead'
+    explanation: 'Please use "graduate" instead',
   },
-    pilot: {
+  pilot: {
     fn: function (text) {
-      var positives = ["air(?:m[ae]n|wom[ae]n)"];
+      var positives = ['air(?:m[ae]n|wom[ae]n)'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
-      while (match = re.exec(text)) {
+      let match;
+      while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
           offset: match[0].length,
@@ -33,6 +35,6 @@ module.exports = {
 
       return suggestions;
     },
-    explanation: 'Use "pilots" instead'
-  }
-}
+    explanation: 'Use "pilots" instead',
+  },
+};

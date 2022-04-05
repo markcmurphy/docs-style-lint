@@ -380,9 +380,9 @@ const apiRoute = nextConnect({
     // });
     // console.log('🚀 ~ file: lint.js ~ line 377 ~ err', err);
     var hasErrors = false;
-    // report(err || results, {
-    //   silent: silent,
-    // })
+    report(err || results, {
+      silent: silent,
+    });
     // res.send(
     // const resReport = report(err || results, {
     //   silent: silent,
@@ -413,39 +413,39 @@ const apiRoute = nextConnect({
     remark()
       // TODO: fix MD lint rules
       // .use(linterRules)
-      // .use(validateLinks, {})
-      // .use(validateExternalLinks, {
-      //   skipLocalhost: true,
-      //   skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
-      //   gotOptions: {
-      //     // baseUrl: 'https://developer-beta.bigcommerce.com',
-      //     baseUrl: 'https://developer.bigcommerce.com',
-      //   },
-      // })
+      .use(validateLinks, {})
+      .use(validateExternalLinks, {
+        skipLocalhost: true,
+        skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
+        gotOptions: {
+          // baseUrl: 'https://developer-beta.bigcommerce.com',
+          baseUrl: 'https://developer.bigcommerce.com',
+        },
+      })
       .use(writeGood, {
         checks: general,
         whitelist: ignoreWords,
       })
-      // .use(writeGood, {
-      //   checks: dateFormat,
-      //   whitelist: ignoreWords,
-      // })
-      // .use(writeGood, {
-      //   checks: ellipses,
-      //   whitelist: ignoreWords,
-      // })
-      // .use(writeGood, {
-      //   checks: emdash,
-      //   whitelist: ignoreWords,
-      // })
-      // .use(writeGood, {
-      //   checks: exclamation,
-      //   whitelist: ignoreWords,
-      // })
-      // .use(writeGood, {
-      //   checks: firstPerson,
-      //   whitelist: ignoreWords,
-      // })
+      .use(writeGood, {
+        checks: dateFormat,
+        whitelist: ignoreWords,
+      })
+      .use(writeGood, {
+        checks: ellipses,
+        whitelist: ignoreWords,
+      })
+      .use(writeGood, {
+        checks: emdash,
+        whitelist: ignoreWords,
+      })
+      .use(writeGood, {
+        checks: exclamation,
+        whitelist: ignoreWords,
+      })
+      .use(writeGood, {
+        checks: firstPerson,
+        whitelist: ignoreWords,
+      })
       // .use(writeGood, {
       //   checks: writeGoodExtension,
       //   whitelist: ignoreWords.concat('In order to'),
@@ -455,46 +455,46 @@ const apiRoute = nextConnect({
       .use(
         remark2retext,
         retext() // Convert markdown to plain text
-        // TODO: configure readability thresholds to make it useful
-        // .use(readability, readabilityConfig || {})
-        // TODO: configure simplify to be less sensitive
-        // .use(simplify, {
-        //   ignore: ignoreWords.concat([
-        //     'multiple',
-        //     'render',
-        //     'forward',
-        //     'should',
-        //     'in order to',
-        //   ]),
-        // })
-        // .use(writeGoodWordNode, {
-        //   whitelist: ignoreWords.concat(['as']),
-        //   checks: glossery,
-        // })
-        // .use(equality, {
-        //   ignore: ignoreWords.concat([
-        //     'just',
-        //     'easy',
-        //     'disable',
-        //     'disabled',
-        //     'host',
-        //   ]),
-        // })
-        // .use(syntaxURLS)
-        // .use(intensify, {
-        //   ignore: ignoreWords.concat([]),
-        // })
-        // .use(repeatedWords)
-        // .use(indefiniteArticles)
-        // .use(assuming, {
-        //   ignore: ignoreWords.concat([]),
-        // })
-        // TODO: have spell not check URLS or file names
-        // .use(spell, {
-        //   dictionary: dictionary,
-        //   ignore: ignoreWords.concat([]),
-        //   ignoreLiteral: true,
-        // })
+          // TODO: configure readability thresholds to make it useful
+          // .use(readability, readabilityConfig || {})
+          // TODO: configure simplify to be less sensitive
+          // .use(simplify, {
+          //   ignore: ignoreWords.concat([
+          //     'multiple',
+          //     'render',
+          //     'forward',
+          //     'should',
+          //     'in order to',
+          //   ]),
+          // })
+          // .use(writeGoodWordNode, {
+          //   whitelist: ignoreWords.concat(['as']),
+          //   checks: glossery,
+          // })
+          // .use(equality, {
+          //   ignore: ignoreWords.concat([
+          //     'just',
+          //     'easy',
+          //     'disable',
+          //     'disabled',
+          //     'host',
+          //   ]),
+          // })
+          // .use(syntaxURLS)
+          // .use(intensify, {
+          //   ignore: ignoreWords.concat([]),
+          // })
+          .use(repeatedWords)
+          // .use(indefiniteArticles)
+          // .use(assuming, {
+          //   ignore: ignoreWords.concat([]),
+          // })
+          // TODO: have spell not check URLS or file names
+          .use(spell, {
+            dictionary: dictionary,
+            ignore: ignoreWords.concat([]),
+            ignoreLiteral: true,
+          })
       )
       // plugin to enable, disable, and ignore messages.
       // .use(control, {
@@ -510,10 +510,11 @@ const apiRoute = nextConnect({
       //   ],
       // })
       .process(filez, function (err, results) {
+        console.log('🚀 ~ file: lint.js ~ line 513 ~ results', results);
         var filteredMessages = [];
-        results.messages.forEach((message) => {
-          var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
-          var hasFatalSource = _.includes(fatalRules, message.source);
+        results.messages?.forEach((message) => {
+          // var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
+          // var hasFatalSource = _.includes(fatalRules, message.source);
           var hasSuggestedRuleId = _.includes(suggestRules, message.ruleId);
           var hasSuggestedSource = _.includes(suggestRules, message.source);
 
@@ -527,9 +528,9 @@ const apiRoute = nextConnect({
             delete message.fatal;
           }
 
-          if (fatalRules && (hasFatalRuleId || hasFatalSource)) {
-            message.fatal = true;
-          }
+          // if (fatalRules && (hasFatalRuleId || hasFatalSource)) {
+          //   message.fatal = true;
+          // }
 
           filteredMessages.push(message);
         });

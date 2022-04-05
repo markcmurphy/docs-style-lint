@@ -4,7 +4,7 @@ module.exports = {
     fn: function (text) {
       var re = /\d{1,2}(?:\.|\/)\d{1,2}(?:\.|\/)\d{4}/gi;
       var suggestions = [];
-      // re.exec(text)
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -18,9 +18,9 @@ module.exports = {
   },
   dateFormat: {
     fn: function (text) {
-      console.log('🚀 ~ file: dateFormat.js ~ line 26 ~ text', text);
       var re = /\d{1,2} (?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)|May|Jun(?:e)|Jul(?:y)|Aug(?:ust)|Sep(?:tember)?|Oct(?:ober)|Nov(?:ember)?|Dec(?:ember)?) \d{4}/gi;
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,

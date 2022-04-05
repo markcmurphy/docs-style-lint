@@ -3,6 +3,7 @@ module.exports = {
     fn: function (text) {
       var positives = [';(?=(?:[^`]*`[^`]*`)*[^`]*$)'];
       var suggestions = [];
+      let match;
       var re = new RegExp(positives.join('|'), 'g');
       while ((match = re.exec(text))) {
         suggestions.push({
@@ -20,6 +21,7 @@ module.exports = {
       var positives = ['Control Panel'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -35,6 +37,7 @@ module.exports = {
       var positives = ['Big Commerce', 'bigcommerce', 'big commerce'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -50,6 +53,7 @@ module.exports = {
       var positives = ['Blueprint Themes', 'Blueprint-based themes'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -65,6 +69,7 @@ module.exports = {
       var positives = ['channel manager'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -80,6 +85,7 @@ module.exports = {
       var positives = ['e-commerce', 'Ecommerce', 'eCommerce'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -95,6 +101,7 @@ module.exports = {
       var positives = ['community'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -115,6 +122,7 @@ module.exports = {
       ];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -130,6 +138,7 @@ module.exports = {
       var positives = ['frontmatter'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -145,6 +154,7 @@ module.exports = {
       var positives = ['handlebars'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -165,6 +175,7 @@ module.exports = {
       ];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -181,6 +192,7 @@ module.exports = {
       var positives = ['sku'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -196,6 +208,7 @@ module.exports = {
       var positives = ['Stencil Themes', 'Stencil-based themes'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -211,6 +224,7 @@ module.exports = {
       var positives = ['Store Front'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -232,6 +246,7 @@ module.exports = {
       ];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -247,6 +262,7 @@ module.exports = {
       var positives = ['&'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -262,6 +278,7 @@ module.exports = {
       var positives = ['access/w'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -278,6 +295,7 @@ module.exports = {
       var positives = ['\\baddin\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -293,6 +311,7 @@ module.exports = {
       var positives = ['allows you'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -308,6 +327,7 @@ module.exports = {
       var positives = ["API's"];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -323,6 +343,7 @@ module.exports = {
       var positives = ['abnormal'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -339,6 +360,7 @@ module.exports = {
       var positives = ['abort'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -355,6 +377,7 @@ module.exports = {
       var positives = ['above'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -370,6 +393,7 @@ module.exports = {
       var positives = ['account name'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -385,6 +409,7 @@ module.exports = {
       var positives = ['actionable'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -401,6 +426,7 @@ module.exports = {
       var positives = ['\\baddon\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -416,6 +442,7 @@ module.exports = {
       var positives = ['url bar', 'omnibox'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -431,6 +458,7 @@ module.exports = {
       var positives = ['ad hoc'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -447,6 +475,7 @@ module.exports = {
       var positives = ['agnostic'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -463,6 +492,7 @@ module.exports = {
       var positives = ['agnostic'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -479,6 +509,7 @@ module.exports = {
       var positives = ['Ajax', 'ajax'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -495,6 +526,7 @@ module.exports = {
       var positives = ['aka'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -511,6 +543,7 @@ module.exports = {
       var positives = ['allowlist'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -527,6 +560,7 @@ module.exports = {
       var positives = ['allows you to'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -542,6 +576,7 @@ module.exports = {
       var positives = ['Alpha'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -557,6 +592,7 @@ module.exports = {
       var positives = ['and so on'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -572,6 +608,7 @@ module.exports = {
   //         var positives = ["\\bas\\b"];
   //         var re = new RegExp(positives.join('|'), 'gi');
   //         var suggestions = [];
+  // let match;
   //         while (match = re.exec(text)) {
   //             suggestions.push({
   //                 index: match.index,
@@ -587,6 +624,7 @@ module.exports = {
       var positives = ['auto populate', 'auto-populate'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -602,6 +640,7 @@ module.exports = {
       var positives = ['auto-scaling'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -617,6 +656,7 @@ module.exports = {
       var positives = ['auto-tagging'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -632,6 +672,7 @@ module.exports = {
       var positives = ['autoupdate'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -647,6 +688,7 @@ module.exports = {
       var positives = ['back-end', 'back end'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -662,6 +704,7 @@ module.exports = {
       var positives = ['backwards compatible'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -677,6 +720,7 @@ module.exports = {
       var positives = ['below'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -692,6 +736,7 @@ module.exports = {
       var positives = ['blackhat', 'black hat', 'black-hat'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -708,6 +753,7 @@ module.exports = {
       var positives = ['blind'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -724,6 +770,7 @@ module.exports = {
       var positives = ['builtsin'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -739,6 +786,7 @@ module.exports = {
       var positives = ['check box'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -753,6 +801,7 @@ module.exports = {
     fn: function (text) {
       var re = /(?<=^|\s|$)cli(?=^|\s|$)/gi;
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -769,6 +818,7 @@ module.exports = {
       var positives = ['click on'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -785,6 +835,7 @@ module.exports = {
       var positives = ['click here'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -801,6 +852,7 @@ module.exports = {
       var positives = ['code base'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -816,6 +868,7 @@ module.exports = {
       var positives = ['comprise'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -832,6 +885,7 @@ module.exports = {
       var positives = ['\\b(?<!-)config\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -848,6 +902,7 @@ module.exports = {
       var positives = ['\\bcons\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -863,6 +918,7 @@ module.exports = {
       var positives = ['\\bcpu\\b'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -879,6 +935,7 @@ module.exports = {
       var positives = ['currently'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -895,6 +952,7 @@ module.exports = {
       var positives = ['data are'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -911,6 +969,7 @@ module.exports = {
       var positives = ['deep-linking'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -927,6 +986,7 @@ module.exports = {
       var positives = ['desire'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -942,6 +1002,7 @@ module.exports = {
       var positives = ['disable'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -958,6 +1019,7 @@ module.exports = {
       var positives = ['\\bdoc\\b', '\\bdocs\\b', 'article', 'topic'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -974,6 +1036,7 @@ module.exports = {
       var positives = ['dropdown'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -990,6 +1053,7 @@ module.exports = {
       var positives = ['dropdown'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1006,6 +1070,7 @@ module.exports = {
   //         var positives = ["e.g."];
   //         var re = new RegExp(positives.join('|'), 'gi');
   //         var suggestions = [];
+  // let match;
   //         while (match = re.exec(text)) {
   //             suggestions.push({
   //                 index: match.index,
@@ -1021,6 +1086,7 @@ module.exports = {
       var positives = ['end point'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1036,6 +1102,7 @@ module.exports = {
       var positives = ['\\betc'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1052,6 +1119,7 @@ module.exports = {
       var positives = ['file name'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1067,6 +1135,7 @@ module.exports = {
       var positives = ['file system'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1082,6 +1151,7 @@ module.exports = {
       var positives = ['first-class', 'first class'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1098,6 +1168,7 @@ module.exports = {
       var positives = ['for instance'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1114,6 +1185,7 @@ module.exports = {
       var positives = ['front-end', 'front end'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1129,6 +1201,7 @@ module.exports = {
       var positives = ['grandfather'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1145,6 +1218,7 @@ module.exports = {
       var positives = ['grandfather'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1161,6 +1235,7 @@ module.exports = {
       var positives = ['grandfather'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1177,6 +1252,7 @@ module.exports = {
       var positives = ['hamburger'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1193,6 +1269,7 @@ module.exports = {
       var positives = ['hamburger'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1209,6 +1286,7 @@ module.exports = {
       var positives = ['health'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1225,6 +1303,7 @@ module.exports = {
       var positives = ['\\bhit\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1240,6 +1319,7 @@ module.exports = {
       var positives = ['housekeeping', 'house keeping', 'house-keeping'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1256,6 +1336,7 @@ module.exports = {
       var positives = ['\\bhover\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1271,6 +1352,7 @@ module.exports = {
   //         var positives = ["\\bi\.e\.", "\\bie\\b"];
   //         var re = new RegExp(positives.join('|'), 'gi');
   //         var suggestions = [];
+  // let match;
   //         while (match = re.exec(text)) {
   //             suggestions.push({
   //                 index: match.index,
@@ -1286,6 +1368,7 @@ module.exports = {
       var positives = ['in order to'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1301,6 +1384,7 @@ module.exports = {
       var positives = ['\\bIP\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1316,6 +1400,7 @@ module.exports = {
       var positives = ['key pair'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1331,6 +1416,7 @@ module.exports = {
       var positives = ['key pair'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1346,6 +1432,7 @@ module.exports = {
       var positives = ['key/value pair', 'key value pair'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1361,6 +1448,7 @@ module.exports = {
       var positives = ['\\bkill'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1376,6 +1464,7 @@ module.exports = {
       var positives = ['\\blame'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1391,6 +1480,7 @@ module.exports = {
       var positives = ["\\blet's"];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1406,6 +1496,7 @@ module.exports = {
       var positives = ['\\bleverage'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1422,6 +1513,7 @@ module.exports = {
       var positives = ['life cycle', 'life-cycle'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1437,6 +1529,7 @@ module.exports = {
       var positives = ['life time', 'life-time'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1452,6 +1545,7 @@ module.exports = {
       var positives = ['login', 'log-in'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1468,6 +1562,7 @@ module.exports = {
       var positives = ['login', 'log-in'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1484,6 +1579,7 @@ module.exports = {
       var positives = ['markdown'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1500,6 +1596,7 @@ module.exports = {
       var positives = ['mark-up'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1515,6 +1612,7 @@ module.exports = {
       var positives = ['\\bmay\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1531,6 +1629,7 @@ module.exports = {
       var positives = ['\\bna\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1547,6 +1646,7 @@ module.exports = {
       var positives = ['name server'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1562,6 +1662,7 @@ module.exports = {
       var positives = ['name space'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1577,6 +1678,7 @@ module.exports = {
       var positives = ['native'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1593,6 +1695,7 @@ module.exports = {
       var positives = ['neither\\s\\w\\sor'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1608,6 +1711,7 @@ module.exports = {
       var positives = ['OAuth 2', 'OAuth2', 'Oauth'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1623,6 +1727,7 @@ module.exports = {
       var positives = ['\\bok\\b', '\\bOkay\\b'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1638,6 +1743,7 @@ module.exports = {
       var positives = ['\\bonce\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1653,6 +1759,7 @@ module.exports = {
       var positives = ['\\bonce\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1668,6 +1775,7 @@ module.exports = {
       var positives = ['open-source'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1683,6 +1791,7 @@ module.exports = {
       var positives = ['filepath', 'file path', 'pathname', 'path name'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1699,6 +1808,7 @@ module.exports = {
       var positives = ['\\bplease\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1715,6 +1825,7 @@ module.exports = {
       var positives = ['pre-defined'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1730,6 +1841,7 @@ module.exports = {
       var positives = ['pre-condition'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1745,6 +1857,7 @@ module.exports = {
       var positives = ['\\bpros\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1761,6 +1874,7 @@ module.exports = {
       var positives = ['quick'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1777,6 +1891,7 @@ module.exports = {
       var positives = ['quota'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1793,6 +1908,7 @@ module.exports = {
       var positives = ['regex'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1808,6 +1924,7 @@ module.exports = {
       var positives = ['repo\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1823,6 +1940,7 @@ module.exports = {
       var positives = ['Representational State Transfer'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1839,6 +1957,7 @@ module.exports = {
       var positives = ['\\bsaas\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1854,6 +1973,7 @@ module.exports = {
       var positives = ['\\bscale\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1870,6 +1990,7 @@ module.exports = {
       var positives = ['should'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1886,6 +2007,7 @@ module.exports = {
       var positives = ['sign into'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1901,6 +2023,7 @@ module.exports = {
       var positives = ['signout'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1917,6 +2040,7 @@ module.exports = {
       var positives = ['\\bsince\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1933,6 +2057,7 @@ module.exports = {
       var positives = ['singlemost'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1948,6 +2073,7 @@ module.exports = {
       var positives = ['\\bslave\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1964,6 +2090,7 @@ module.exports = {
       var positives = ['smartphone'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1980,6 +2107,7 @@ module.exports = {
       var positives = ['spin up'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -1996,6 +2124,7 @@ module.exports = {
       var positives = ['stylesheet'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2012,6 +2141,7 @@ module.exports = {
       var positives = ['stylesheet'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2028,6 +2158,7 @@ module.exports = {
       var positives = ['textbox', 'text box'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2044,6 +2175,7 @@ module.exports = {
       var positives = ['textbox', 'text box'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2060,6 +2192,7 @@ module.exports = {
       var positives = ['uncheck'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2076,6 +2209,7 @@ module.exports = {
       var positives = ['unselect'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2092,6 +2226,7 @@ module.exports = {
       var positives = ['unarchive', 'uncompress', 'unzip'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2107,6 +2242,7 @@ module.exports = {
       var positives = ['\\burl'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2123,6 +2259,7 @@ module.exports = {
       var positives = ['user name'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2138,6 +2275,7 @@ module.exports = {
       var positives = ['utilize', 'utilization'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2154,6 +2292,7 @@ module.exports = {
       var positives = ['\\bvia\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2169,6 +2308,7 @@ module.exports = {
       var positives = ['vice versa'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2185,6 +2325,7 @@ module.exports = {
       var positives = ['voila'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2200,6 +2341,7 @@ module.exports = {
       var positives = ['\\bvs'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2216,6 +2358,7 @@ module.exports = {
       var positives = ['walk-through'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2231,6 +2374,7 @@ module.exports = {
       var positives = ['webpage'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2247,6 +2391,7 @@ module.exports = {
       var positives = ['webpage'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2263,6 +2408,7 @@ module.exports = {
       var positives = ['web site'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2278,6 +2424,7 @@ module.exports = {
       var positives = ['whitelist', 'white list', 'white-list'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2294,6 +2441,7 @@ module.exports = {
       var positives = ['white space'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2309,6 +2457,7 @@ module.exports = {
   //     var positives = ['\\bwill\\b', 'would'];
   //     var re = new RegExp(positives.join('|'), 'gi');
   //     var suggestions = [];
+  // let match;
   //     while ((match = re.exec(text))) {
   //       suggestions.push({
   //         index: match.index,
@@ -2325,6 +2474,7 @@ module.exports = {
       var positives = ['wifi', 'WiFi'];
       var re = new RegExp(positives.join('|'), 'g');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2341,6 +2491,7 @@ module.exports = {
       var positives = ['wild card'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2356,6 +2507,7 @@ module.exports = {
       var positives = ['\\bwish\\b'];
       var re = new RegExp(positives.join('|'), 'gi');
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
@@ -2371,6 +2523,7 @@ module.exports = {
   //         var positives = ["\\bwith\\b"];
   //         var re = new RegExp(positives.join('|'), 'gi');
   //         var suggestions = [];
+  // let match;
   //         while (match = re.exec(text)) {
   //             suggestions.push({
   //                 index: match.index,

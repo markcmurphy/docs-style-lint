@@ -3,6 +3,7 @@ module.exports = {
     fn: function (text) {
       var re = /\.\.\./gi;
       var suggestions = [];
+      let match;
       while ((match = re.exec(text))) {
         suggestions.push({
           index: match.index,
