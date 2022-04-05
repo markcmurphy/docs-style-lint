@@ -162,7 +162,7 @@ BundleB2B (B3) add(s) business-to-business (B2B) functionality to the BigCommerc
   // console.log(code)
   return (
     <>
-      <h1>Linter!</h1>
+      <h1>Dev Docs Linter</h1>
 
       <Formik
         initialValues={
