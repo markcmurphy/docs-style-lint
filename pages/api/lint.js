@@ -380,9 +380,9 @@ const apiRoute = nextConnect({
     // });
     // console.log('🚀 ~ file: lint.js ~ line 377 ~ err', err);
     var hasErrors = false;
-    report(err || results, {
-      silent: silent,
-    });
+    // report(err || results, {
+    //   silent: silent,
+    // });
     // res.send(
     // const resReport = report(err || results, {
     //   silent: silent,
@@ -480,7 +480,7 @@ const apiRoute = nextConnect({
           //     'host',
           //   ]),
           // })
-          // .use(syntaxURLS)
+          .use(syntaxURLS)
           // .use(intensify, {
           //   ignore: ignoreWords.concat([]),
           // })
