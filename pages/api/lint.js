@@ -388,7 +388,6 @@ const apiRoute = nextConnect({
     //   silent: silent,
     // });
     let resSendArr = [];
-    // console.log(results);
 
     results.forEach((result) => {
       result.messages.forEach((message) => {
