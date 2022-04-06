@@ -2,48 +2,53 @@ const _ = require('lodash');
 // const argv = require('minimist')(process.argv.slice(2));
 // const chalk = require('chalk');
 const en_US = require('dictionary-en-us');
-// const fs = require('fs');
+const fs = require('fs');
 // const lint = require('remark-lint-maximum-line-length');
 // const lint = require('remark-cli');
 // const lint = require('remark-preset-lint-markdown-style-guide');
 const map = require('async/map');
 // const meow = require('meow');
 const path = require('path');
-const remark = require('remark');
-const remark2retext = require('remark-retext');
-const report = require('vfile-reporter');
-const retext = require('retext');
-const toString = require('nlcst-to-string');
-const toVFile = require('to-vfile');
-const visit = require('unist-util-visit');
+// import('remark');
+// const remark = require('remark');
+import { remark } from 'remark';
+import remarkRetext from 'remark-retext';
+import('vfile-reporter');
+import { retext } from 'retext';
+import('nlcst-to-string');
+import('to-vfile');
+import('unist-util-visit');
+import getConfig from 'next/config';
+const { serverRuntimeConfig } = getConfig();
 
 // remark and retext plugins
-const equality = require('retext-equality');
-const intensify = require('retext-intensify');
-const control = require('remark-message-control');
-const spell = require('retext-spell');
-const lint = require('remark-lint');
-const validateLinks = require('remark-validate-links');
-const validateExternalLinks = require('remark-lint-no-dead-urls');
-const syntaxURLS = require('retext-syntax-urls');
-const repeatedWords = require('retext-repeated-words');
-const indefiniteArticles = require('retext-indefinite-article');
-const assuming = require('retext-assuming');
-// const readability = require('retext-readability');
-const simplify = require('retext-simplify');
+// import { equality } from 'retext-equality';
+import retextEquality from 'retext-equality';
+import { retextIntensify as intensify } from 'retext-intensify';
+import remarkMessageControl from 'remark-message-control';
+import retextSpell from 'retext-spell';
+import remarkLint from 'remark-lint';
+import remarkValidateLinks from 'remark-validate-links';
+import * as validateExternalLinks from 'remark-lint-no-dead-urls';
+import { retextSyntaxUrls as syntaxURLS } from 'retext-syntax-urls';
+import retextRepeatedWords from 'retext-repeated-words';
+import { retextIndefiniteArticle as indefiniteArticles } from 'retext-indefinite-article';
+import * as assuming from 'retext-assuming';
+import retextReadability from 'retext-readability';
+import retextSimplify from 'retext-simplify';
 
 // writeGood modules
-const writeGoodWordNode = require('./modules/write-good/index.js');
-const writeGood = require('remark-lint-write-good');
-const writeGoodExtension = require('./modules/write-good/writeGoodExtension.js');
-const firstPerson = require('./modules/write-good/firstPerson.js');
-const genderBias = require('./modules/write-good/genderBias.js');
-const dateFormat = require('./modules/write-good/dateFormat.js');
-const ellipses = require('./modules/write-good/ellipses.js');
-const emdash = require('./modules/write-good/emdash.js');
-const exclamation = require('./modules/write-good/exclamation.js');
-const general = require('./modules/write-good/general.js');
-const glossery = require('./modules/write-good/glossery.js');
+import * as writeGoodWordNode from './modules/write-good/index.js';
+import * as writeGood from 'remark-lint-write-good';
+import * as writeGoodExtension from './modules/write-good/writeGoodExtension.js';
+import * as firstPerson from './modules/write-good/firstPerson.js';
+import * as genderBias from './modules/write-good/genderBias.js';
+import * as dateFormat from './modules/write-good/dateFormat.js';
+import * as ellipses from './modules/write-good/ellipses.js';
+import * as emdash from './modules/write-good/emdash.js';
+import * as exclamation from './modules/write-good/exclamation.js';
+import * as general from './modules/write-good/general.js';
+import * as glossery from './modules/write-good/glossery.js';
 
 // import { json } from 'express';
 // import multer from 'multer';
@@ -82,6 +87,8 @@ const apiRoute = nextConnect({
   var config = {};
   var customConfig = {};
   var defaultConfig = require('./default-config.json');
+  // var defaultConfig = require(serverRuntimeConfig.PROJECT_ROOT +
+  //   '\\default-config.json');
 
   defaultConfig.dictionaries.forEach((dictPath, index, arr) => {
     arr[index] = path.join(__dirname, dictPath);
@@ -124,22 +131,23 @@ const apiRoute = nextConnect({
   //     }
   //   }
 
-  //   // If custom dictionaries are provided, prepare their paths
-  //   if (customConfig.dictionaries) {
-  //     // Convert dictionaries string to an array
-  //     var customDict = customConfig.dictionaries;
-  //     if (typeof customDict === 'string' || customDict instanceof String) {
-  //       customConfig.dictionaries = [customDict];
-  //     }
+  // If custom dictionaries are provided, prepare their paths
+  if (customConfig.dictionaries) {
+    // Convert dictionaries string to an array
+    var customDict = customConfig.dictionaries;
+    if (typeof customDict === 'string' || customDict instanceof String) {
+      customConfig.dictionaries = [customDict];
+    }
 
-  //     // Add cwd to custom dictionary paths
-  //     customConfig.dictionaries.forEach((dictionaryPath) => {
-  //       dictionaryPath = process.cwd() + dictionaryPath;
-  //     });
-  //   } else {
-  //     // Remove empty dictonaries key so it doesn't override default config
-  //     delete customConfig.dictionaries;
-  //   }
+    // Add cwd to custom dictionary paths
+    customConfig.dictionaries.forEach((dictionaryPath) => {
+      dictionaryPath = process.cwd() + dictionaryPath;
+      // dictionaryPath = serverRuntimeConfig.PROJECT_ROOT + dictionaryPath;
+    });
+  } else {
+    // Remove empty dictonaries key so it doesn't override default config
+    delete customConfig.dictionaries;
+  }
 
   //   // Merge default and custom rules, preferring customRules and concating arrays
   config = _.mergeWith(defaultConfig, customConfig, (objValue, srcValue) => {
@@ -149,34 +157,35 @@ const apiRoute = nextConnect({
   });
   // }
 
-  var dictionary = en_US;
+  let dictionary = en_US;
 
   var myReadFile = function (dictPath, cb) {
-    console.log('🚀 ~ file: lint.js ~ line 161 ~ myReadFile ~ myReadFile');
-
     fs.readFile(dictPath, function (err, buffer) {
+      console.log('🚀 ~ file: lint.js ~ line 164 ~ dictPath', dictPath);
+      console.log('🚀 ~ file: lint.js ~ line 163 ~ buffer', buffer);
       cb(err, !err && buffer);
     });
   };
 
-  //   if (config.dictionaries && config.dictionaries.length >= 1) {
-  //     dictionary = function (cb) {
-  //       en_US(function (err, primary) {
-  //         map(config.dictionaries, myReadFile, function (err, results) {
-  //           results.unshift(primary.dic);
-  //           var combinedDictionaries = Buffer.concat(results);
-
-  //           cb(
-  //             err,
-  //             !err && {
-  //               aff: primary.aff,
-  //               dic: combinedDictionaries,
-  //             }
-  //           );
-  //         });
-  //       });
-  //     };
-  //   }
+  if (config.dictionaries && config.dictionaries.length >= 1) {
+    dictionary = function (cb) {
+      en_US(function (err, primary) {
+        map(config.dictionaries, myReadFile, function (err, results) {
+          console.log('🚀 ~ file: lint.js ~ line 173 ~ results', results);
+          console.log('🚀 ~ file: lint.js ~ line 172 ~ err', err);
+          results.unshift(primary.dic);
+          var combinedDictionaries = Buffer.concat(results);
+          cb(
+            err,
+            !err && {
+              aff: primary.aff,
+              dic: combinedDictionaries,
+            }
+          );
+        });
+      });
+    };
+  }
 
   // var lintRules = _.mapValues(config.rules, (value) => {
   //   var keys = Object.keys(value);
@@ -357,7 +366,7 @@ const apiRoute = nextConnect({
     // Not checked.)
   ];
 
-  // var readabilityConfig = config.rules['retext-readability'];
+  var readabilityConfig = config.rules['retext-readability'];
 
   var ignoreWords = _.difference(config.ignore, config.noIgnore);
 
@@ -407,12 +416,10 @@ const apiRoute = nextConnect({
   });
 
   function checkFile(filez, cb) {
-    // console.log('🚀 ~ file: lint.js ~ line 398 ~ checkFile ~ filez', filez);
-
     remark()
       // TODO: fix MD lint rules
-      // .use(linterRules)
-      .use(validateLinks, {})
+      // .use(remarkLint)
+      .use(remarkValidateLinks, {})
       .use(validateExternalLinks, {
         skipLocalhost: true,
         skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
@@ -445,58 +452,58 @@ const apiRoute = nextConnect({
         checks: firstPerson,
         whitelist: ignoreWords,
       })
-      // .use(writeGood, {
-      //   checks: writeGoodExtension,
-      //   whitelist: ignoreWords.concat('In order to'),
-      //   //   // ignore: ignoreWords.concat(['in order to']),
-      // })
+      .use(writeGood, {
+        checks: writeGoodExtension,
+        whitelist: ignoreWords.concat('In order to'),
+        //   // ignore: ignoreWords.concat(['in order to']),
+      })
       // TODO: consolidate some writeGood modules
       .use(
-        remark2retext,
+        remarkRetext,
         retext() // Convert markdown to plain text
+          .use(writeGoodWordNode, {
+            checks: glossery,
+            whitelist: ignoreWords.concat(['as']),
+          })
           // TODO: configure readability thresholds to make it useful
-          // .use(readability, readabilityConfig || {})
+          .use(retextReadability, readabilityConfig || {})
           // TODO: configure simplify to be less sensitive
-          // .use(simplify, {
-          //   ignore: ignoreWords.concat([
-          //     'multiple',
-          //     'render',
-          //     'forward',
-          //     'should',
-          //     'in order to',
-          //   ]),
-          // })
-          // .use(writeGoodWordNode, {
-          //   whitelist: ignoreWords.concat(['as']),
-          //   checks: glossery,
-          // })
-          // .use(equality, {
-          //   ignore: ignoreWords.concat([
-          //     'just',
-          //     'easy',
-          //     'disable',
-          //     'disabled',
-          //     'host',
-          //   ]),
-          // })
+          .use(retextSimplify, {
+            ignore: ignoreWords.concat([
+              'multiple',
+              'render',
+              'forward',
+              'should',
+              'in order to',
+            ]),
+          })
+          .use(retextEquality, {
+            ignore: ignoreWords.concat([
+              'just',
+              'easy',
+              'disable',
+              'disabled',
+              'host',
+            ]),
+          })
           .use(syntaxURLS)
           // .use(intensify, {
           //   ignore: ignoreWords.concat([]),
           // })
-          .use(repeatedWords)
-          // .use(indefiniteArticles)
+          .use(retextRepeatedWords)
+          .use(indefiniteArticles)
           // .use(assuming, {
           //   ignore: ignoreWords.concat([]),
           // })
           // TODO: have spell not check URLS or file names
-          .use(spell, {
+          .use(retextSpell, {
             dictionary: dictionary,
             ignore: ignoreWords.concat([]),
             ignoreLiteral: true,
           })
       )
       // plugin to enable, disable, and ignore messages.
-      // .use(control, {
+      // .use(remarkMessageControl, {
       //   name: 'quality-docs',
       //   source: [
       //     'remark-lint',
@@ -509,6 +516,7 @@ const apiRoute = nextConnect({
       //   ],
       // })
       .process(filez, function (err, results) {
+        console.log('🚀 ~ file: lint.js ~ line 513 ~ err', err);
         console.log('🚀 ~ file: lint.js ~ line 513 ~ results', results);
         var filteredMessages = [];
         results.messages?.forEach((message) => {

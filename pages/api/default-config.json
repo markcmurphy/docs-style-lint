@@ -1,5 +1,5 @@
 {
-  "dictionaries": ["en_US-tech-industry.dic", "bigcommerce.dic"],
+  "dictionaries": ["../../../../public/en_US-tech-industry.dic", "../../../../public/bigcommerce.dic"],
   "rules": {
     "blockquote-indentation": {
       "severity": "fatal"
