@@ -38,7 +38,6 @@ function ListItem({ value }) {
   console.log("🚀 ~ file: SignupForm.jsx ~ line 38 ~ ListItem ~ value", value)
   return (
     <li>
-      {/* <b>Line:</b> {value.message}  <b>Message:</b>{' '} */}
       <b>Line:</b> {value.name} <b>Message:</b> {value.message} | {value.source}
     </li>
   );
@@ -49,9 +48,14 @@ function NumberList({errors}) {
   // const errorMsgs = errors[0];
 
   // const errMsgs = errorMsgs?.messages;
-  const listItems = errors.map((error, index) => (
+  const listItems = Array.isArray(errors) ? errors.map((error, index) => (
     <ListItem key={index} value={error} />
-  ));
+  )) : null;
+
+  // return (
+  //   <ul>{listItems}</ul>
+  // );
+
 
   if (errors !== undefined) {
     return <ul>{listItems}</ul>
