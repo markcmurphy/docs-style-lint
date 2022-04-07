@@ -24,6 +24,7 @@ __pycache__
 venv
 CVS
 
+
 # dependencies
 /node_modules
 /.pnp
