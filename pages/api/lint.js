@@ -425,7 +425,7 @@ const apiRoute = nextConnect({
     remark()
       // TODO: fix MD lint rules
       // .use(remarkLint)
-      .use(remarkValidateLinks, {})
+      // .use(remarkValidateLinks, {})
       .use(validateExternalLinks, {
         skipLocalhost: true,
         skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
