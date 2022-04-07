@@ -519,28 +519,30 @@ const apiRoute = nextConnect({
         console.log('🚀 ~ file: lint.js ~ line 513 ~ err', err);
         console.log('🚀 ~ file: lint.js ~ line 513 ~ results', results);
         var filteredMessages = [];
-        results.messages?.forEach((message) => {
-          // var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
-          // var hasFatalSource = _.includes(fatalRules, message.source);
-          var hasSuggestedRuleId = _.includes(suggestRules, message.ruleId);
-          var hasSuggestedSource = _.includes(suggestRules, message.source);
+        if (results !== undefined) {
+          results.messages?.forEach((message) => {
+            // var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
+            // var hasFatalSource = _.includes(fatalRules, message.source);
+            var hasSuggestedRuleId = _.includes(suggestRules, message.ruleId);
+            var hasSuggestedSource = _.includes(suggestRules, message.source);
 
-          if (suggestRules && (hasSuggestedRuleId || hasSuggestedSource)) {
-            message.message = message.message.replace(
-              /don\’t use “(.*)”/gi,
-              (match, word) => {
-                return 'Use “' + word + '” sparingly';
-              }
-            );
-            delete message.fatal;
-          }
+            if (suggestRules && (hasSuggestedRuleId || hasSuggestedSource)) {
+              message.message = message.message.replace(
+                /don\’t use “(.*)”/gi,
+                (match, word) => {
+                  return 'Use “' + word + '” sparingly';
+                }
+              );
+              delete message.fatal;
+            }
 
-          // if (fatalRules && (hasFatalRuleId || hasFatalSource)) {
-          //   message.fatal = true;
-          // }
+            // if (fatalRules && (hasFatalRuleId || hasFatalSource)) {
+            //   message.fatal = true;
+            // }
 
-          filteredMessages.push(message);
-        });
+            filteredMessages.push(message);
+          });
+        }
         results.messages = filteredMessages;
         // console.log('🚀 ~ file: lint.js ~ line 525 ~ results', results);
         cb(null, results);
