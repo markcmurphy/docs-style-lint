@@ -38,7 +38,7 @@ import retextReadability from 'retext-readability';
 import retextSimplify from 'retext-simplify';
 
 // writeGood modules
-import * as writeGoodWordNode from './modules/write-good/index.js';
+import { remarkWriteGood } from './modules/write-good/index.js';
 import * as writeGood from 'remark-lint-write-good';
 import * as writeGoodExtension from './modules/write-good/writeGoodExtension.js';
 import * as firstPerson from './modules/write-good/firstPerson.js';
@@ -461,7 +461,7 @@ const apiRoute = nextConnect({
       .use(
         remarkRetext,
         retext() // Convert markdown to plain text
-          .use(writeGoodWordNode, {
+          .use(remarkWriteGood, {
             checks: glossery,
             whitelist: ignoreWords.concat(['as']),
           })

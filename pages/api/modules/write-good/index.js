@@ -1,9 +1,10 @@
-import * as lintRule from 'unified-lint-rule';
-const visit = require('unist-util-visit');
-const toString = require('nlcst-to-string');
-import('write-good');
+import { lintRule } from 'unified-lint-rule';
+import { visit } from 'unist-util-visit';
+import('nlcst-to-string');
+import { writeGood } from 'remark-lint-write-good';
 
 function astProcessor(ast, file, options) {
+  console.log('🚀 ~ file: index.js ~ line 7 ~ astProcessor ~ file', file);
   //   console.log('🚀 ~ file: index.js ~ line 7 ~ astProcessor ~ ast', ast);
 
   visit(ast, ['SentenceNode'], (node, _, parent) => {
@@ -58,8 +59,11 @@ function astProcessor(ast, file, options) {
   });
 }
 
-// module.exports = lintRule('remark-lint:write-good', astProcessor);
-module.exports.astProcessor = astProcessor;
+const remarkWriteGood = lintRule(
+  'remark-lint:remark-lint-write-good',
+  astProcessor
+);
+// module.exports.astProcessor = astProcessor;
 
 function findNewlines(str) {
   const indices = [];
@@ -75,3 +79,5 @@ function findNewlines(str) {
   }
   return indices;
 }
+
+export default remarkWriteGood;
