@@ -549,7 +549,7 @@ const apiRoute = nextConnect({
             filteredMessages.push(message);
           });
         }
-        results.messages = filteredMessages;
+        results.messages ? (results.messages = filteredMessages) : null;
         // console.log('🚀 ~ file: lint.js ~ line 525 ~ results', results);
         cb(null, results);
       });
