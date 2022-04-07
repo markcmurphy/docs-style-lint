@@ -492,15 +492,15 @@ const apiRoute = nextConnect({
           // })
           .use(retextRepeatedWords)
           .use(indefiniteArticles)
-          // .use(assuming, {
-          //   ignore: ignoreWords.concat([]),
-          // })
-          // TODO: have spell not check URLS or file names
-          .use(retextSpell, {
-            dictionary: dictionary,
-            ignore: ignoreWords.concat([]),
-            ignoreLiteral: true,
-          })
+        // .use(assuming, {
+        //   ignore: ignoreWords.concat([]),
+        // })
+        // TODO: have spell not check URLS or file names
+        // .use(retextSpell, {
+        //   dictionary: dictionary,
+        //   ignore: ignoreWords.concat([]),
+        //   ignoreLiteral: true,
+        // })
       )
       // plugin to enable, disable, and ignore messages.
       // .use(remarkMessageControl, {
