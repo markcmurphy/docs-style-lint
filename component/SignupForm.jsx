@@ -45,7 +45,7 @@ function ListItem({ value }) {
 }
 
 function NumberList({errors}) {
-  console.log("🚀 ~ file: SignupForm.jsx ~ line 47 ~ NumberList ~ errors", errors)
+  console.log("🚀 ~ file: SignupForm.jsx ~ line 48 ~ NumberList ~ errors", errors)
   // const errorMsgs = errors[0];
 
   // const errMsgs = errorMsgs?.messages;
@@ -55,7 +55,8 @@ function NumberList({errors}) {
 
   if (errors !== undefined) {
     return <ul>{listItems}</ul>
-  }}
+  }
+}
 
 
 const SignupForm = () => {
