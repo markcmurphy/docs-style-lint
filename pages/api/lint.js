@@ -461,10 +461,10 @@ const apiRoute = nextConnect({
       .use(
         remarkRetext,
         retext() // Convert markdown to plain text
-          .use(remarkWriteGood, {
-            checks: glossery,
-            whitelist: ignoreWords.concat(['as']),
-          })
+          // .use(remarkWriteGood, {
+          //   checks: glossery,
+          //   whitelist: ignoreWords.concat(['as']),
+          // })
           // TODO: configure readability thresholds to make it useful
           .use(retextReadability, readabilityConfig || {})
           // TODO: configure simplify to be less sensitive
