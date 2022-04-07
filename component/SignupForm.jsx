@@ -35,6 +35,7 @@ import 'prismjs/themes/prism.css';
 // TODO: return results as table https://react-table.tanstack.com/docs/examples/basic
 
 function ListItem({ value }) {
+  console.log("🚀 ~ file: SignupForm.jsx ~ line 38 ~ ListItem ~ value", value)
   return (
     <li>
       {/* <b>Line:</b> {value.message}  <b>Message:</b>{' '} */}
@@ -43,16 +44,19 @@ function ListItem({ value }) {
   );
 }
 
-function NumberList({ errors }) {
-  const errorMsgs = errors[0];
-  const errMsgs = errorMsgs?.messages;
-  const listItems = errMsgs.map((error, index) => (
+function NumberList({errors}) {
+  console.log("🚀 ~ file: SignupForm.jsx ~ line 47 ~ NumberList ~ errors", errors)
+  // const errorMsgs = errors[0];
+
+  // const errMsgs = errorMsgs?.messages;
+  const listItems = errors.map((error, index) => (
     <ListItem key={index} value={error} />
   ));
+
   if (errors !== undefined) {
-    return listItems.length ? <ul>{listItems}</ul> : <div>Waiting</div>;
-  }
-}
+    return <ul>{listItems}</ul>
+  }}
+
 
 const SignupForm = () => {
   const [errors, setErrors] = useState([]);
