@@ -526,9 +526,9 @@ const apiRoute = nextConnect({
         console.log('🚀 ~ file: lint.js ~ line 513 ~ results', results);
         var filteredMessages = [];
         if (results !== undefined) {
-          results.messages?.forEach((message) => {
-            // var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
-            // var hasFatalSource = _.includes(fatalRules, message.source);
+          results.messages.forEach((message) => {
+            var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
+            var hasFatalSource = _.includes(fatalRules, message.source);
             var hasSuggestedRuleId = _.includes(suggestRules, message.ruleId);
             var hasSuggestedSource = _.includes(suggestRules, message.source);
 
@@ -542,9 +542,9 @@ const apiRoute = nextConnect({
               delete message.fatal;
             }
 
-            // if (fatalRules && (hasFatalRuleId || hasFatalSource)) {
-            //   message.fatal = true;
-            // }
+            if (fatalRules && (hasFatalRuleId || hasFatalSource)) {
+              message.fatal = true;
+            }
 
             filteredMessages.push(message);
           });
