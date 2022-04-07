@@ -45,10 +45,10 @@ function ListItem({ value }) {
 function NumberList(props) {
   console.log("🚀 ~ file: SignupForm.jsx ~ line 46 ~ NumberList ~ props", props)
   const numbers = props.numbers;
-  const listItems = numbers.map((number, index) => (
+  const listItems = numbers?.map((number, index) => (
     <ListItem key={index} value={number} />
   ));
-  return <ul>{listItems}</ul>;
+  return listItems.length ? <ul>{listItems}</ul> : <div>Waiting</div>;
 }
 
 const SignupForm = () => {
