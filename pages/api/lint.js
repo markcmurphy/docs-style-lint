@@ -384,6 +384,7 @@ const apiRoute = nextConnect({
   // map(docFiles, toVFile.read, function (err, files) {
 
   map(docFiles, checkFile, function (err, results) {
+    console.log('🚀 ~ file: lint.js ~ line 387 ~ results', results);
     // results[0].messages?.forEach((message) => {
     //   console.log(message);
     // });
@@ -398,21 +399,22 @@ const apiRoute = nextConnect({
     // });
     let resSendArr = [];
 
-    results.forEach((result) => {
-      result.messages.forEach((message) => {
-        resSendArr.push(message);
-      });
-    });
-    res.send(resSendArr);
+    // results.messages.forEach((result) => {
+    //   // result.forEach((res) => {
+    //   resSendArr.push(result);
+    // });
+    // });
+    // console.log('🚀 ~ file: lint.js ~ line 407 ~ resSendArr', resSendArr);
+    res.send(results);
     // );
 
     // Check for errors and exit with error code if found
-    results.forEach((result) => {
-      result.messages.forEach((message) => {
-        if (message.fatal) hasErrors = true;
-      });
-    });
-    if (hasErrors) process.exit(1);
+    // results.forEach((result) => {
+    //   result.messages.forEach((message) => {
+    //     if (message.fatal) hasErrors = true;
+    //   });
+    // });
+    // if (hasErrors) process.exit(1);
   });
 
   function checkFile(filez, cb) {

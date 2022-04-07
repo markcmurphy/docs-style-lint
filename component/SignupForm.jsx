@@ -33,22 +33,26 @@ import 'prismjs/themes/prism.css';
 // `;
 
 // TODO: return results as table https://react-table.tanstack.com/docs/examples/basic
+
 function ListItem({ value }) {
+  console.log("🚀 ~ file: SignupForm.jsx ~ line 38 ~ ListItem ~ value", value)
   return (
     <li>
+      {/* <b>Line:</b> {value.message}  <b>Message:</b>{' '} */}
       <b>Line:</b> {value.name}  <b>Message:</b>{' '}
       {value.message} | {value.source}
     </li>
   );
 }
 
-function NumberList(props) {
-  console.log("🚀 ~ file: SignupForm.jsx ~ line 46 ~ NumberList ~ props", props)
-  const numbers = props.numbers;
-  const listItems = numbers.map((number, index) => (
-    <ListItem key={index} value={number} />
+function NumberList( {errors}) {
+  const errorMsgs = errors[0]
+  console.log("🚀 ~ file: SignupForm.jsx ~ line 50 ~ NumberList ~ errorMsgs", errorMsgs.messages)
+  const errMsgs = errorMsgs.messages;
+  const listItems = errMsgs.map((error, index) => (
+    <ListItem key={index} value={error} />
   ));
-  if (numbers !== undefined) {
+  if (errors !== undefined) {
     return listItems.length ? <ul>{listItems}</ul> : <div>Waiting</div>;
   }
 }
@@ -125,8 +129,8 @@ BundleB2Bly (B3) add(s) business-to-business (B2B) functionality to the BigComme
       </Formik>
       {/* // TODO: wait indicator */}
       <div>
-        {errorDisplay}
-        <NumberList numbers={errors} />
+        {/* {errorDisplay} */}
+        <NumberList errors={errors} />
       </div>
     </>
   );
