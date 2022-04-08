@@ -19,7 +19,7 @@ import('vfile-reporter');
 import { retext } from 'retext';
 import('nlcst-to-string');
 import('to-vfile');
-import('unist-util-visit');
+import { visit } from 'unist-util-visit';
 import getConfig from 'next/config';
 const { serverRuntimeConfig } = getConfig();
 
@@ -38,6 +38,9 @@ import { retextIndefiniteArticle as indefiniteArticles } from 'retext-indefinite
 import * as assuming from 'retext-assuming';
 import retextReadability from 'retext-readability';
 import retextSimplify from 'retext-simplify';
+
+import { lintRule } from 'unified-lint-rule';
+const writeGoodCore = require('write-good');
 
 // writeGood modules
 import { remarkWriteGood } from './modules/write-good/index.js';
@@ -428,14 +431,14 @@ const apiRoute = nextConnect({
         whitelist: ignoreWords.concat('In order to'),
         // ignore: ignoreWords.concat(['in order to']),
       })
+      .use(writeGood, {
+        checks: glossery,
+        whitelist: ignoreWords.concat(['as']),
+      })
       // TODO: consolidate some writeGood modules
       .use(
         remarkRetext,
         retext() // Convert markdown to plain text
-          .use(remarkWriteGood, {
-            checks: glossery,
-            whitelist: ignoreWords.concat(['as']),
-          })
           // TODO: configure readability thresholds to make it useful
           .use(retextReadability, readabilityConfig || {})
           // TODO: configure simplify to be less sensitive
