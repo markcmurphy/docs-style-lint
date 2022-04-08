@@ -130,9 +130,9 @@ const apiRoute = nextConnect({
   // var defaultConfig = require(serverRuntimeConfig.PROJECT_ROOT +
   //   '\\default-config.json');
 
-  // defaultConfig.dictionaries.forEach((dictPath, index, arr) => {
-  //   arr[index] = path.join(__dirname, dictPath);
-  // });
+  defaultConfig.dictionaries.forEach((dictPath, index, arr) => {
+    arr[index] = path.join(__dirname, dictPath);
+  });
 
   // If custom dictionaries are provided, prepare their paths
   if (customConfig.dictionaries) {
