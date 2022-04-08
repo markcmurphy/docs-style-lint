@@ -84,15 +84,6 @@ const apiRoute = nextConnect({
   // // Build array of files that match input glob
 
   // // Use --config file if provided, otherwise defaults
-  var config = {};
-  var customConfig = {};
-  var defaultConfig = require('./default-config.json');
-  // var defaultConfig = require(serverRuntimeConfig.PROJECT_ROOT +
-  //   '\\default-config.json');
-
-  defaultConfig.dictionaries.forEach((dictPath, index, arr) => {
-    arr[index] = path.join(__dirname, dictPath);
-  });
 
   // if (!cli.flags.config) {
   //   config = defaultConfig;
@@ -130,6 +121,18 @@ const apiRoute = nextConnect({
   //       );
   //     }
   //   }
+
+  var config = {};
+  var customConfig = {};
+  var defaultConfig = require('./default-config.json');
+  // let bigcommerce = require('../../public/bigcommerce.dic');
+  // import techIndustry from '../../public/en_US-tech-industry.dic';
+  // var defaultConfig = require(serverRuntimeConfig.PROJECT_ROOT +
+  //   '\\default-config.json');
+
+  // defaultConfig.dictionaries.forEach((dictPath, index, arr) => {
+  //   arr[index] = path.join(__dirname, dictPath);
+  // });
 
   // If custom dictionaries are provided, prepare their paths
   if (customConfig.dictionaries) {
@@ -467,10 +470,10 @@ const apiRoute = nextConnect({
       .use(
         remarkRetext,
         retext() // Convert markdown to plain text
-          // .use(remarkWriteGood, {
-          //   checks: glossery,
-          //   whitelist: ignoreWords.concat(['as']),
-          // })
+          .use(remarkWriteGood, {
+            checks: glossery,
+            whitelist: ignoreWords.concat(['as']),
+          })
           // TODO: configure readability thresholds to make it useful
           .use(retextReadability, readabilityConfig || {})
           // TODO: configure simplify to be less sensitive
@@ -498,15 +501,15 @@ const apiRoute = nextConnect({
           // })
           .use(retextRepeatedWords)
           .use(indefiniteArticles)
-        // .use(assuming, {
-        //   ignore: ignoreWords.concat([]),
-        // })
-        // TODO: have spell not check URLS or file names
-        // .use(retextSpell, {
-        //   dictionary: dictionary,
-        //   ignore: ignoreWords.concat([]),
-        //   ignoreLiteral: true,
-        // })
+          // .use(assuming, {
+          //   ignore: ignoreWords.concat([]),
+          // })
+          // TODO: have spell not check URLS or file names
+          .use(retextSpell, {
+            dictionary: dictionary,
+            ignore: ignoreWords.concat([]),
+            ignoreLiteral: true,
+          })
       )
       // plugin to enable, disable, and ignore messages.
       // .use(remarkMessageControl, {
