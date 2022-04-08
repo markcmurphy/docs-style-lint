@@ -1,7 +1,9 @@
 const _ = require('lodash');
 // const argv = require('minimist')(process.argv.slice(2));
 // const chalk = require('chalk');
-const en_US = require('dictionary-en-us');
+// const en_US = require('dictionary-en-us');
+var en_US = require('dictionary-en');
+
 const fs = require('fs');
 // const lint = require('remark-lint-maximum-line-length');
 // const lint = require('remark-cli');
@@ -50,17 +52,8 @@ import * as exclamation from './modules/write-good/exclamation.js';
 import * as general from './modules/write-good/general.js';
 import * as glossery from './modules/write-good/glossery.js';
 
-// import { json } from 'express';
-// import multer from 'multer';
 import nextConnect from 'next-connect';
 import { VFile } from 'vfile';
-// import { reporter } from 'vfile-reporter';
-
-// const storage = multer.memoryStorage();
-
-// const upload = multer({
-//   storage: storage,
-// });
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
@@ -73,24 +66,21 @@ const apiRoute = nextConnect({
     res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
   },
 }).post((req, res) => {
-  // const uploadMiddleware = upload.single('file');
-
-  // apiRoute.use(uploadMiddleware);
-
   // var silent = cli.flags.silent || false;
   // export default handler(req, res) {
   // if (req.method === 'POST') {
-  var silent = false;
-  // // Build array of files that match input glob
 
-  // // Use --config file if provided, otherwise defaults
+  var silent = false;
+  // Build array of files that match input glob
+
+  // Use --config file if provided, otherwise defaults
 
   // if (!cli.flags.config) {
   //   config = defaultConfig;
   // } else {
   //   customConfig = JSON.parse(fs.readFileSync(cli.flags.config, 'utf8'));
 
-  //   // If --config and --ignore are specified, update the config with new ignore
+  // If --config and --ignore are specified, update the config with new ignore
   //   if (customConfig.ignore && cli.flags.ignore) {
   //     var isValidString = /^[ A-Za-z0-9_@./#&+-]*$/.test(cli.flags.ignore);
   //     var isUnique = !_.includes(customConfig.ignore, cli.flags.ignore);
@@ -124,15 +114,7 @@ const apiRoute = nextConnect({
 
   var config = {};
   var customConfig = {};
-  var defaultConfig = require('./default-config.json');
-  // let bigcommerce = require('../../public/bigcommerce.dic');
-  // import techIndustry from '../../public/en_US-tech-industry.dic';
-  // var defaultConfig = require(serverRuntimeConfig.PROJECT_ROOT +
-  //   '\\default-config.json');
-
-  defaultConfig.dictionaries.forEach((dictPath, index, arr) => {
-    arr[index] = path.join(__dirname, dictPath);
-  });
+  var defaultConfig = require('../../default-config.json');
 
   // If custom dictionaries are provided, prepare their paths
   if (customConfig.dictionaries) {
@@ -148,45 +130,49 @@ const apiRoute = nextConnect({
       // dictionaryPath = serverRuntimeConfig.PROJECT_ROOT + dictionaryPath;
     });
   } else {
+    console.log('🚀 ~ file: lint.js ~ line 196 ~ //handler ~ else');
     // Remove empty dictonaries key so it doesn't override default config
     delete customConfig.dictionaries;
   }
 
-  //   // Merge default and custom rules, preferring customRules and concating arrays
+  // Merge default and custom rules, preferring customRules and concating arrays
   config = _.mergeWith(defaultConfig, customConfig, (objValue, srcValue) => {
     if (_.isArray(objValue)) {
       return _.uniq(objValue.concat(srcValue));
     }
   });
-  // }
 
   let dictionary = en_US;
 
-  var myReadFile = function (dictPath, cb) {
-    fs.readFile(dictPath, function (err, buffer) {
-      console.log('🚀 ~ file: lint.js ~ line 164 ~ dictPath', dictPath);
-      console.log('🚀 ~ file: lint.js ~ line 163 ~ buffer', buffer);
-      cb(err, !err && buffer);
-    });
+  const bcDic = async (dic) => {
+    const response = await fetch(dic);
+    const dictionary = await response.text();
+    return dictionary;
+  };
+
+  var myReadFile = async function (dictPath, cb) {
+    const dictContents = await bcDic(dictPath);
+    const buff = await Buffer.from(dictContents, 'utf-8');
+    return buff;
   };
 
   if (config.dictionaries && config.dictionaries.length >= 1) {
-    dictionary = function (cb) {
-      en_US(function (err, primary) {
-        map(config.dictionaries, myReadFile, function (err, results) {
-          console.log('🚀 ~ file: lint.js ~ line 173 ~ results', results);
-          console.log('🚀 ~ file: lint.js ~ line 172 ~ err', err);
-          results.unshift(primary.dic);
-          var combinedDictionaries = Buffer.concat(results);
-          cb(
-            err,
-            !err && {
-              aff: primary.aff,
-              dic: combinedDictionaries,
-            }
-          );
-        });
-      });
+    dictionary = async function (cb) {
+      en_US(
+        await function (err, primary) {
+          map(config.dictionaries, myReadFile, function (err, results) {
+            results.unshift(primary.dic);
+            var combinedDictionaries = Buffer.concat(results);
+            cb(
+              err,
+              !err && {
+                aff: primary.aff,
+                dic: combinedDictionaries,
+              }
+            );
+          });
+        }
+      );
     };
   }
 
@@ -374,46 +360,23 @@ const apiRoute = nextConnect({
   var ignoreWords = _.difference(config.ignore, config.noIgnore);
 
   // if (cli.flags.verbose) {
-  //
-  //
-  //
-  //
   // }
 
   let fileToCheck = new VFile(req.body.toString('utf-8'));
   let docFiles = [];
   docFiles.push(fileToCheck);
 
-  // map(docFiles, toVFile.read, function (err, files) {
-
   map(docFiles, checkFile, function (err, results) {
-    // console.log('🚀 ~ file: lint.js ~ line 387 ~ results', results);
-    // results[0].messages?.forEach((message) => {
-    //   console.log(message);
-    // });
-    // console.log('🚀 ~ file: lint.js ~ line 377 ~ err', err);
     var hasErrors = false;
-    // report(err || results, {
-    //   silent: silent,
-    // });
-    // res.send(
-    // const resReport = report(err || results, {
-    //   silent: silent,
-    // });
+
     let resSendArr = [];
 
     results.forEach((result) => {
       result.messages.forEach((res) => {
         resSendArr.push(res);
       });
-      // console.log(
-      //   '🚀 ~ file: lint.js ~ line 408 ~ results.forEach ~ result',
-      //   result
-      // );
     });
-    console.log('🚀 ~ file: lint.js ~ line 407 ~ resSendArr', resSendArr);
     res.send(resSendArr);
-    // );
 
     // Check for errors and exit with error code if found
     // results.forEach((result) => {
@@ -433,7 +396,6 @@ const apiRoute = nextConnect({
         skipLocalhost: true,
         skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
         gotOptions: {
-          // baseUrl: 'https://developer-beta.bigcommerce.com',
           baseUrl: 'https://developer.bigcommerce.com',
         },
       })
@@ -464,7 +426,7 @@ const apiRoute = nextConnect({
       .use(writeGood, {
         checks: writeGoodExtension,
         whitelist: ignoreWords.concat('In order to'),
-        //   // ignore: ignoreWords.concat(['in order to']),
+        // ignore: ignoreWords.concat(['in order to']),
       })
       // TODO: consolidate some writeGood modules
       .use(
@@ -516,7 +478,7 @@ const apiRoute = nextConnect({
       //   name: 'quality-docs',
       //   source: [
       //     'remark-lint',
-      //     // 'remark-lint-write-good',
+      // 'remark-lint-write-good',
       //     'retext-readability',
       //     'retext-simplify',
       //     'retext-equality',
@@ -525,8 +487,6 @@ const apiRoute = nextConnect({
       //   ],
       // })
       .process(filez, function (err, results) {
-        console.log('🚀 ~ file: lint.js ~ line 513 ~ err', err);
-        console.log('🚀 ~ file: lint.js ~ line 513 ~ results', results);
         var filteredMessages = [];
         if (results !== undefined) {
           results.messages.forEach((message) => {
@@ -553,24 +513,9 @@ const apiRoute = nextConnect({
           });
         }
         results.messages ? (results.messages = filteredMessages) : null;
-        // console.log('🚀 ~ file: lint.js ~ line 525 ~ results', results);
         cb(null, results);
       });
   }
-
-  // let fileToCheck = new VFile(stream.toString('utf-8'));
-  // let fileToCheck = new VFile(req.body.toString('utf-8'));
-
-  // checkFile(fileToCheck, function (err, results) {
-  //   console.log('🚀 ~ file: lint.js ~ line 519 ~ err', err);
-  //   console.log('🚀 ~ file: lint.js ~ line 519 ~ results', results.messages);
-  //   // report(err || results, {
-  //   //   silent: silent,
-  //   // });
-  // });
-  // });
-
-  // checkFile(fileToCheck.value);
 });
 
 export default apiRoute;
