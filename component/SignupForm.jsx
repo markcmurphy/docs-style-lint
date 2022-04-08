@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Form, useField, useFormikContext } from 'formik';
 import * as Yup from 'yup';
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
 import Editor from 'react-simple-code-editor';
 // import { highlight, languages } from 'prismjs/components/prism-core';
 // import 'prismjs/components/prism-clike';
+import { css } from '@emotion/react';
 import Prism from 'prismjs';
 import { markdown } from 'prismjs/components/prism-markdown';
 import 'prismjs/themes/prism.css';
+import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
+
 
 // Styled components ....
 // const StyledSelect = styled.select`
@@ -32,14 +35,20 @@ import 'prismjs/themes/prism.css';
 //   margin-top: 1rem;
 // `;
 
+const override = css`
+  display: flex;
+  margin: 3vh 0 0 3vw;
+  border-color: red;
+`;
+
 // TODO: return results as table https://react-table.tanstack.com/docs/examples/basic
 
 function ListItem({ value }) {
   console.log("🚀 ~ file: SignupForm.jsx ~ line 38 ~ ListItem ~ value", value)
   return (
-    <li>
+    <div className="alert alert-primary" role="alert">
       <b>Line:</b> {value.name} <b>Message:</b> {value.message} | {value.source}
-    </li>
+    </div>
   );
 }
 
@@ -69,6 +78,7 @@ const SignupForm = () => {
   const [selectedFile, setSelectedFile] = useState();
   const [isSelected, setIsSelected] = useState(false);
   const [formBody, setFormBody] = useState('code');
+  let [loading, setLoading] = useState(false);
   const [code, setCode] = useState(`# Dev Docs Linter Sample Markdown
 
 This is a little something we just cooked up.
@@ -113,11 +123,13 @@ List modules here:
 
   return (
     <>
-      <h1>Dev Docs Linter</h1>
+      <h1 style={{marginTop: '4%', marginLeft: '5%'}}>Dev Docs Linter</h1>
 
       <Formik
         initialValues={{}}
         onSubmit={async (values, { setSubmitting }) => {
+          setErrors([]);
+          setLoading(!loading);
           async function postData(url) {
             const response = await fetch(url, {
               method: 'POST',
@@ -151,8 +163,11 @@ List modules here:
             className="editor language-markdown"
             style={{
               fontFamily: '"Fira code", "Fira Mono", monospace',
-              fontSize: 18,
+              fontSize: 14,
               outline: 'solid black 1px',
+              margin: '3%',
+              marginBottom: '0.5%',
+              padding: '0.5%'
             }}
           />
           {/* <MySelect label="Project" name="projectId">
@@ -161,13 +176,24 @@ List modules here:
             <option value="cHJqOjI4MDIz">DevDocs</option>
           </MySelect> */}
           <br></br>
-          <button type="submit">Submit</button>
+          <button style={{marginLeft: '3%', marginBottom: '3%'}} type="submit">Submit</button>
         </Form>
       </Formik>
       {/* // TODO: wait indicator */}
       <div>
         {/* {errorDisplay} */}
-        <NumberList errors={errors} />
+        {!errors.length ? (
+        <div className="sweet-loading">
+          <ClimbingBoxLoader
+            loading={loading}
+            color={'maroon'}
+            // loading={true}
+            css={override}
+            size={35}
+          />
+        </div>
+        ) : null}
+        <NumberList style={{marginLeft: '3%'}} errors={errors} />
       </div>
     </>
   );
