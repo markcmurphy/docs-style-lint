@@ -69,11 +69,42 @@ const SignupForm = () => {
   const [selectedFile, setSelectedFile] = useState();
   const [isSelected, setIsSelected] = useState(false);
   const [formBody, setFormBody] = useState('code');
-  const [code, setCode] = useState(`# The B2B Edition of BigCommercely
+  const [code, setCode] = useState(`# Dev Docs Linter Sample Markdown
 
-[bad link](https://www.github.com/wooom/remark-dead-link)
+This is a little something we just cooked up.
 
-BundleB2Bly (B3) add(s) business-to-business (B2B) functionality to the BigCommerce platform, allowing businesses to easily facilitate B2B Control Panel operations on-line. B3 provides a comprehensive suite of key B2B features to improve the B2B self-service experience for BigCommerce store owners and their customers.`);
+## Dictionaries
+
+How does it know what to check?
+
+### Standard dictionary
+This linter uses a standard en-US flavoured dictionarry as a base. It still struggles with context, though, as in "Kelsey Grammer has wonderful grammar".
+
+### Custom dictionaries
+We can and should use custom dictionaries!
+
+Correct:
+- MailChimp
+- BigCommerce
+
+Incorrect:
+- mailchimp
+- bigcommerce
+
+### Other modules
+
+List modules here:
+ 1. 
+ 2.
+ 3.
+
+#### Some tests
+- Sorry, I got to excited on line 5. 
+- Oh man, we also shouldn't have used first-person language. 
+- Using "man" could be considered insensitive, too. 
+- Oops, that was passive voice.
+- [bad link](https://www.github.com/wooom/remark-dead-link)
+`);
 
   const changeHandler = (event) => {
     setCode(event.target.value);
