@@ -8,7 +8,7 @@ import Editor from 'react-simple-code-editor';
 import { css } from '@emotion/react';
 import Prism from 'prismjs';
 import { markdown } from 'prismjs/components/prism-markdown';
-import 'prismjs/themes/prism.css';
+// import 'prismjs/themes/prism.css';
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
 
 
@@ -79,6 +79,7 @@ const SignupForm = () => {
   const [isSelected, setIsSelected] = useState(false);
   const [formBody, setFormBody] = useState('code');
   let [loading, setLoading] = useState(false);
+  let [resultsFound, setResultsFound] = useState(-1);
   const [code, setCode] = useState(`# Dev Docs Linter Sample Markdown
 
 This is a little something we just cooked up.
@@ -123,13 +124,13 @@ List modules here:
 
   return (
     <>
-      <h1 style={{marginTop: '4%', marginLeft: '5%'}}>Dev Docs Linter</h1>
-
+      <h1 style={{ marginTop: '4%', marginLeft: '5%' }}>Dev Docs Linter</h1>
       <Formik
         initialValues={{}}
         onSubmit={async (values, { setSubmitting }) => {
           setErrors([]);
-          setLoading(!loading);
+          setResultsFound(-1);
+          setLoading(true);
           async function postData(url) {
             const response = await fetch(url, {
               method: 'POST',
@@ -138,11 +139,9 @@ List modules here:
             return response.json();
           }
           const result = await postData('/api/lint');
-          console.log(
-            '🚀 ~ file: SignupForm.jsx ~ line 89 ~ onSubmit={ ~ result',
-            result
-          );
+          setLoading(false);
           setErrors(result);
+          setResultsFound(result.length);
           setSubmitting(false);
         }}
       >
@@ -161,14 +160,14 @@ List modules here:
             onValueChange={(code) => setCode(code)}
             textareaId="codeArea"
             className="editor language-markdown"
-            style={{
-              fontFamily: '"Fira code", "Fira Mono", monospace',
-              fontSize: 14,
-              outline: 'solid black 1px',
-              margin: '3%',
-              marginBottom: '0.5%',
-              padding: '0.5%'
-            }}
+            // style={{
+            //   fontFamily: '"Fira code", "Fira Mono", monospace',
+            //   fontSize: 14,
+            //   outline: 'solid black 1px',
+            //   margin: '3%',
+            //   marginBottom: '0.5%',
+            //   padding: '0.5%'
+            // }}
           />
           {/* <MySelect label="Project" name="projectId">
             <option value="">Select a project</option>
@@ -176,24 +175,30 @@ List modules here:
             <option value="cHJqOjI4MDIz">DevDocs</option>
           </MySelect> */}
           <br></br>
-          <button style={{marginLeft: '3%', marginBottom: '3%'}} type="submit">Submit</button>
+          <button
+            style={{ marginLeft: '3%', marginBottom: '3%' }}
+            type="submit"
+          >
+            Submit
+          </button>
         </Form>
       </Formik>
       {/* // TODO: wait indicator */}
       <div>
         {/* {errorDisplay} */}
-        {!errors.length ? (
-        <div className="sweet-loading">
-          <ClimbingBoxLoader
-            loading={loading}
-            color={'maroon'}
-            // loading={true}
-            css={override}
-            size={35}
-          />
-        </div>
+        {loading ? (
+          <div className="sweet-loading">
+            <ClimbingBoxLoader
+              loading={loading}
+              color={'maroon'}
+              // loading={true}
+              css={override}
+              size={35}
+            />
+          </div>
         ) : null}
-        <NumberList style={{marginLeft: '3%'}} errors={errors} />
+        {resultsFound == -1 ? '' : 'Results Found: ' + resultsFound}
+        <NumberList style={{ marginLeft: '3%' }} errors={errors} />
       </div>
     </>
   );

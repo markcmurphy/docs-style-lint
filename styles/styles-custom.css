@@ -1,6 +1,6 @@
-input[type="email"],
-input[type="text"],
-input[type="number"],
+input[type='email'],
+input[type='text'],
+input[type='number'],
 textarea,
 select {
   width: 400px;
@@ -14,7 +14,7 @@ label.checkbox {
   font-weight: normal;
 }
 
-button[type="submit"] {
+button[type='submit'] {
   margin-top: 1rem;
 }
 
@@ -32,6 +32,10 @@ button[type="submit"] {
   padding-left: 60px !important;
 }
 
+.editor pre #text::selection {
+  color: white;
+}
+
 .editor .editorLineNumber {
   position: absolute;
   left: 0px;
@@ -40,3 +44,4 @@ button[type="submit"] {
   width: 40px;
   font-weight: 100;
 }
+
