@@ -172,17 +172,17 @@ List modules here:
           <Form>
             {/* <div data-color-mode="light"> */}
             <div data-color-mode="dark">
-            {/* <div> */}
+              {/* <div> */}
               {/* <div className="wmde-markdown-var"> </div> */}
+              {/* //TODO: Add spinner while loading */}
               <MDEditor
                 value={code}
                 onChange={(code) => setCode(code)}
                 height={'70%'}
                 previewOptions={{
-                  rehypePlugins: [[rehypeSanitize]]
+                  rehypePlugins: [[rehypeSanitize]],
                 }}
                 // className="language-markdown"
-                
               />
 
               {/* <div style={{ paddingTop: 50 }}>
@@ -233,14 +233,20 @@ List modules here:
               <div className="sweet-loading">
                 <ClimbingBoxLoader
                   loading={loading}
-                  color={'maroon'}
+                  color={'blue'}
                   // loading={true}
                   css={override}
                   size={35}
                 />
               </div>
             ) : null}
-            {resultsFound == -1 ? '' : 'Results Found: ' + resultsFound}
+            {resultsFound == -1 ? (
+              ''
+            ) : (
+              <div style={{marginBottom:'9px', color: 'white'}}>
+                <b>Results Found: {resultsFound}</b>
+              </div>
+            )}
             <NumberList style={{ marginLeft: '3%' }} errors={errors} />
           </div>
         </>
