@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Formik, Form, useField, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 // import styled from '@emotion/styled';
-import Editor from 'react-simple-code-editor';
+// import Editor from 'react-simple-code-editor';
 // import { highlight, languages } from 'prismjs/components/prism-core';
 // import 'prismjs/components/prism-clike';
 import { css } from '@emotion/react';
@@ -10,7 +10,28 @@ import Prism from 'prismjs';
 import { markdown } from 'prismjs/components/prism-markdown';
 // import 'prismjs/themes/prism.css';
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
+// import MDEditor from '@uiw/react-md-editor';
+import dynamic from 'next/dynamic';
+import rehypeSanitize from 'rehype-sanitize';
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
 
+
+const MDEditor = dynamic(
+  () => import('@uiw/react-md-editor').then((mod) => mod.default),
+  { ssr: false }
+);
+const EditerMarkdown = dynamic(
+  () =>
+    import('@uiw/react-md-editor').then((mod) => {
+      return mod.default.Markdown;
+    }),
+  { ssr: false }
+);
+const Markdown = dynamic(
+  () => import('@uiw/react-markdown-preview').then((mod) => mod.default),
+  { ssr: false }
+);
 
 // Styled components ....
 // const StyledSelect = styled.select`
@@ -44,7 +65,7 @@ const override = css`
 // TODO: return results as table https://react-table.tanstack.com/docs/examples/basic
 
 function ListItem({ value }) {
-  console.log("🚀 ~ file: SignupForm.jsx ~ line 38 ~ ListItem ~ value", value)
+  console.log('🚀 ~ file: SignupForm.jsx ~ line 38 ~ ListItem ~ value', value);
   return (
     <div className="alert alert-primary" role="alert">
       <b>Line:</b> {value.name} <b>Message:</b> {value.message} | {value.source}
@@ -52,25 +73,26 @@ function ListItem({ value }) {
   );
 }
 
-function NumberList({errors}) {
-  console.log("🚀 ~ file: SignupForm.jsx ~ line 48 ~ NumberList ~ errors", errors)
+function NumberList({ errors }) {
+  console.log(
+    '🚀 ~ file: SignupForm.jsx ~ line 48 ~ NumberList ~ errors',
+    errors
+  );
   // const errorMsgs = errors[0];
 
   // const errMsgs = errorMsgs?.messages;
-  const listItems = Array.isArray(errors) ? errors.map((error, index) => (
-    <ListItem key={index} value={error} />
-  )) : null;
+  const listItems = Array.isArray(errors)
+    ? errors.map((error, index) => <ListItem key={index} value={error} />)
+    : null;
 
   // return (
   //   <ul>{listItems}</ul>
   // );
 
-
   if (errors !== undefined) {
-    return <ul>{listItems}</ul>
+    return <ul>{listItems}</ul>;
   }
 }
-
 
 const SignupForm = () => {
   const [errors, setErrors] = useState([]);
@@ -124,7 +146,7 @@ List modules here:
 
   return (
     <>
-      <h1 style={{ marginTop: '4%', marginLeft: '5%' }}>Dev Docs Linter</h1>
+      {/* <h1 style={{ marginTop: '4%', marginLeft: '5%' }}>Dev Docs Linter</h1> */}
       <Formik
         initialValues={{}}
         onSubmit={async (values, { setSubmitting }) => {
@@ -145,8 +167,30 @@ List modules here:
           setSubmitting(false);
         }}
       >
-        <Form>
-          <Editor
+        <>
+          <Form>
+            {/* <div data-color-mode="light"> */}
+            <div data-color-mode="dark">
+            {/* <div> */}
+              {/* <div className="wmde-markdown-var"> </div> */}
+              <MDEditor
+                value={code}
+                onChange={(code) => setCode(code)}
+                height={'70%'}
+                previewOptions={{
+                  rehypePlugins: [[rehypeSanitize]]
+                }}
+                // className="language-markdown"
+                
+              />
+
+              {/* <div style={{ paddingTop: 50 }}>
+              <Markdown source={code} />
+            </div> */}
+              {/* <EditerMarkdown source={code} /> */}
+            </div>
+
+            {/* <Editor
             value={code}
             highlight={(code) =>
               Prism.highlight(code, Prism.languages.markdown, 'markdown')
@@ -168,38 +212,38 @@ List modules here:
             //   marginBottom: '0.5%',
             //   padding: '0.5%'
             // }}
-          />
-          {/* <MySelect label="Project" name="projectId">
+          /> */}
+            {/* <MySelect label="Project" name="projectId">
             <option value="">Select a project</option>
             <option value="cHJqOjIwNjAz">API-Reference</option>
             <option value="cHJqOjI4MDIz">DevDocs</option>
           </MySelect> */}
-          <br></br>
-          <button
-            style={{ marginLeft: '3%', marginBottom: '3%' }}
-            type="submit"
-          >
-            Submit
-          </button>
-        </Form>
-      </Formik>
-      {/* // TODO: wait indicator */}
-      <div>
-        {/* {errorDisplay} */}
-        {loading ? (
-          <div className="sweet-loading">
-            <ClimbingBoxLoader
-              loading={loading}
-              color={'maroon'}
-              // loading={true}
-              css={override}
-              size={35}
-            />
+            <br></br>
+            <button
+              style={{ marginLeft: '3%', marginBottom: '3%' }}
+              type="submit"
+            >
+              Submit
+            </button>
+          </Form>
+          <div>
+            {/* {errorDisplay} */}
+            {loading ? (
+              <div className="sweet-loading">
+                <ClimbingBoxLoader
+                  loading={loading}
+                  color={'maroon'}
+                  // loading={true}
+                  css={override}
+                  size={35}
+                />
+              </div>
+            ) : null}
+            {resultsFound == -1 ? '' : 'Results Found: ' + resultsFound}
+            <NumberList style={{ marginLeft: '3%' }} errors={errors} />
           </div>
-        ) : null}
-        {resultsFound == -1 ? '' : 'Results Found: ' + resultsFound}
-        <NumberList style={{ marginLeft: '3%' }} errors={errors} />
-      </div>
+        </>
+      </Formik>
     </>
   );
 };
