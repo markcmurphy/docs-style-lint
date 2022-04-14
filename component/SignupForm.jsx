@@ -6,15 +6,16 @@ import * as Yup from 'yup';
 // import { highlight, languages } from 'prismjs/components/prism-core';
 // import 'prismjs/components/prism-clike';
 import { css } from '@emotion/react';
-import Prism from 'prismjs';
-import { markdown } from 'prismjs/components/prism-markdown';
+// import Prism from 'prismjs';
+// import { markdown } from 'prismjs/components/prism-markdown';
 // import 'prismjs/themes/prism.css';
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
 // import MDEditor from '@uiw/react-md-editor';
 import dynamic from 'next/dynamic';
 import rehypeSanitize from 'rehype-sanitize';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
+// import '@uiw/react-md-editor/markdown-editor.css';
+// import '@uiw/react-markdown-preview/markdown.css';
+
 
 
 const MDEditor = dynamic(
