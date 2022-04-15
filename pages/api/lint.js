@@ -449,6 +449,7 @@ const apiRoute = nextConnect({
               'forward',
               'should',
               'in order to',
+              'delete',
             ]),
           })
           .use(retextEquality, {
