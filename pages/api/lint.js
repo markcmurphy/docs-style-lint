@@ -1,66 +1,66 @@
-const _ = require('lodash');
+const _ = require("lodash");
 // const argv = require('minimist')(process.argv.slice(2));
 // const chalk = require('chalk');
 // const en_US = require('dictionary-en-us');
-var en_US = require('dictionary-en');
+var en_US = require("dictionary-en");
 
-const fs = require('fs');
+const fs = require("fs");
 // const lint = require('remark-lint-maximum-line-length');
 // const lint = require('remark-cli');
 // const lint = require('remark-preset-lint-markdown-style-guide');
-const map = require('async/map');
+const map = require("async/map");
 // const meow = require('meow');
-const path = require('path');
+const path = require("path");
 // import('remark');
 // const remark = require('remark');
-import { remark } from 'remark';
-import remarkRetext from 'remark-retext';
-import('vfile-reporter');
-import { retext } from 'retext';
-import('nlcst-to-string');
-import('to-vfile');
-import { visit } from 'unist-util-visit';
-import getConfig from 'next/config';
+import { remark } from "remark";
+import remarkRetext from "remark-retext";
+import("vfile-reporter");
+import { retext } from "retext";
+import("nlcst-to-string");
+import("to-vfile");
+import { visit } from "unist-util-visit";
+import getConfig from "next/config";
 const { serverRuntimeConfig } = getConfig();
 
 // remark and retext plugins
 // import { equality } from 'retext-equality';
-import retextEquality from 'retext-equality';
-import { retextIntensify as intensify } from 'retext-intensify';
-import remarkMessageControl from 'remark-message-control';
-import retextSpell from 'retext-spell';
-import remarkLint from 'remark-lint';
-import remarkValidateLinks from 'remark-validate-links';
-import * as validateExternalLinks from 'remark-lint-no-dead-urls';
-import { retextSyntaxUrls as syntaxURLS } from 'retext-syntax-urls';
-import retextRepeatedWords from 'retext-repeated-words';
-import { retextIndefiniteArticle as indefiniteArticles } from 'retext-indefinite-article';
-import * as assuming from 'retext-assuming';
-import retextReadability from 'retext-readability';
-import retextSimplify from 'retext-simplify';
+import retextEquality from "retext-equality";
+import { retextIntensify as intensify } from "retext-intensify";
+import remarkMessageControl from "remark-message-control";
+import retextSpell from "retext-spell";
+import remarkLint from "remark-lint";
+import remarkValidateLinks from "remark-validate-links";
+import * as validateExternalLinks from "remark-lint-no-dead-urls";
+import { retextSyntaxUrls as syntaxURLS } from "retext-syntax-urls";
+import retextRepeatedWords from "retext-repeated-words";
+import { retextIndefiniteArticle as indefiniteArticles } from "retext-indefinite-article";
+import * as assuming from "retext-assuming";
+import retextReadability from "retext-readability";
+import retextSimplify from "retext-simplify";
 
-import { lintRule } from 'unified-lint-rule';
-const writeGoodCore = require('write-good');
+import { lintRule } from "unified-lint-rule";
+const writeGoodCore = require("write-good");
 
 // writeGood modules
-import { remarkWriteGood } from './modules/write-good/index.js';
-import * as writeGood from 'remark-lint-write-good';
-import * as writeGoodExtension from './modules/write-good/writeGoodExtension.js';
-import * as firstPerson from './modules/write-good/firstPerson.js';
-import * as genderBias from './modules/write-good/genderBias.js';
-import * as dateFormat from './modules/write-good/dateFormat.js';
-import * as ellipses from './modules/write-good/ellipses.js';
-import * as emdash from './modules/write-good/emdash.js';
-import * as exclamation from './modules/write-good/exclamation.js';
-import * as general from './modules/write-good/general.js';
-import * as glossery from './modules/write-good/glossery.js';
+import remarkWriteGood from "./modules/write-good";
+import * as writeGood from "remark-lint-write-good";
+import * as writeGoodExtension from "./modules/write-good/writeGoodExtension.js";
+import * as firstPerson from "./modules/write-good/firstPerson.js";
+import * as genderBias from "./modules/write-good/genderBias.js";
+import * as dateFormat from "./modules/write-good/dateFormat.js";
+import * as ellipses from "./modules/write-good/ellipses.js";
+import * as emdash from "./modules/write-good/emdash.js";
+import * as exclamation from "./modules/write-good/exclamation.js";
+import * as general from "./modules/write-good/general.js";
+import * as glossery from "./modules/write-good/glossery.js";
 
-import nextConnect from 'next-connect';
-import { VFile } from 'vfile';
+import nextConnect from "next-connect";
+import { VFile } from "vfile";
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
-    console.log('🚀 ~ file: lint.js ~ line 62 ~ onError ~ error', error);
+    console.log("🚀 ~ file: lint.js ~ line 62 ~ onError ~ error", error);
     res
       .status(501)
       .json({ error: `Sorry something Happened! ${error.message}` });
@@ -117,13 +117,13 @@ const apiRoute = nextConnect({
 
   var config = {};
   var customConfig = {};
-  var defaultConfig = require('../../default-config.json');
+  var defaultConfig = require("../../default-config.json");
 
   // If custom dictionaries are provided, prepare their paths
   if (customConfig.dictionaries) {
     // Convert dictionaries string to an array
     var customDict = customConfig.dictionaries;
-    if (typeof customDict === 'string' || customDict instanceof String) {
+    if (typeof customDict === "string" || customDict instanceof String) {
       customConfig.dictionaries = [customDict];
     }
 
@@ -133,7 +133,6 @@ const apiRoute = nextConnect({
       // dictionaryPath = serverRuntimeConfig.PROJECT_ROOT + dictionaryPath;
     });
   } else {
-    console.log('🚀 ~ file: lint.js ~ line 196 ~ //handler ~ else');
     // Remove empty dictonaries key so it doesn't override default config
     delete customConfig.dictionaries;
   }
@@ -155,7 +154,7 @@ const apiRoute = nextConnect({
 
   var myReadFile = async function (dictPath, cb) {
     const dictContents = await bcDic(dictPath);
-    const buff = await Buffer.from(dictContents, 'utf-8');
+    const buff = await Buffer.from(dictContents, "utf-8");
     return buff;
   };
 
@@ -195,19 +194,19 @@ const apiRoute = nextConnect({
 
   var fatalRules = _.keys(
     _.pickBy(config.rules, function (value) {
-      return value.severity == 'fatal';
+      return value.severity == "fatal";
     })
   );
 
   var warnRules = _.keys(
     _.pickBy(config.rules, function (value) {
-      return value && (value.severity == 'warn' || !value.severity);
+      return value && (value.severity == "warn" || !value.severity);
     })
   );
 
   var suggestRules = _.keys(
     _.pickBy(config.rules, function (value) {
-      return value.severity == 'suggest';
+      return value.severity == "suggest";
     })
   );
 
@@ -358,14 +357,14 @@ const apiRoute = nextConnect({
   //   // Not checked.)
   // ];
 
-  var readabilityConfig = config.rules['retext-readability'];
+  var readabilityConfig = config.rules["retext-readability"];
 
   var ignoreWords = _.difference(config.ignore, config.noIgnore);
 
   // if (cli.flags.verbose) {
   // }
 
-  let fileToCheck = new VFile(req.body.toString('utf-8'));
+  let fileToCheck = new VFile(req.body.toString("utf-8"));
   let docFiles = [];
   docFiles.push(fileToCheck);
 
@@ -397,9 +396,9 @@ const apiRoute = nextConnect({
       // .use(remarkValidateLinks, {})
       .use(validateExternalLinks, {
         skipLocalhost: true,
-        skipUrlPatterns: ['https://github.com', '//s3.amazonaws.com'],
+        skipUrlPatterns: ["https://github.com", "//s3.amazonaws.com"],
         gotOptions: {
-          baseUrl: 'https://developer.bigcommerce.com',
+          baseUrl: "https://developer.bigcommerce.com",
         },
       })
       .use(writeGood, {
@@ -428,12 +427,12 @@ const apiRoute = nextConnect({
       })
       .use(writeGood, {
         checks: writeGoodExtension,
-        whitelist: ignoreWords.concat('In order to'),
+        whitelist: ignoreWords.concat("In order to"),
         // ignore: ignoreWords.concat(['in order to']),
       })
       .use(writeGood, {
         checks: glossery,
-        whitelist: ignoreWords.concat(['as']),
+        whitelist: ignoreWords.concat(["as"]),
       })
       // TODO: consolidate some writeGood modules
       .use(
@@ -444,21 +443,21 @@ const apiRoute = nextConnect({
           // TODO: configure simplify to be less sensitive
           .use(retextSimplify, {
             ignore: ignoreWords.concat([
-              'multiple',
-              'render',
-              'forward',
-              'should',
-              'in order to',
-              'delete',
+              "multiple",
+              "render",
+              "forward",
+              "should",
+              "in order to",
+              "delete",
             ]),
           })
           .use(retextEquality, {
             ignore: ignoreWords.concat([
-              'just',
-              'easy',
-              'disable',
-              'disabled',
-              'host',
+              "just",
+              "easy",
+              "disable",
+              "disabled",
+              "host",
             ]),
           })
           .use(syntaxURLS)
@@ -503,7 +502,7 @@ const apiRoute = nextConnect({
               message.message = message.message.replace(
                 /don\’t use “(.*)”/gi,
                 (match, word) => {
-                  return 'Use “' + word + '” sparingly';
+                  return "Use “" + word + "” sparingly";
                 }
               );
               delete message.fatal;
