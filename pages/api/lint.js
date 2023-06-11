@@ -178,19 +178,19 @@ const apiRoute = nextConnect({
     };
   }
 
-  // var lintRules = _.mapValues(config.rules, (value) => {
-  //   var keys = Object.keys(value);
-  //   if (_.isBoolean(value)) return value;
-  //   if (value.hasOwnProperty('severity')) {
-  //     if (Object.keys(value).length == 1) return true;
-  //     var newValue = {};
-  //     for (var prop in value) {
-  //       if (prop !== 'severity') newValue[prop] = value[prop];
-  //     }
-  //     return newValue;
-  //   }
-  //   return value;
-  // });
+  var lintRules = _.mapValues(config.rules, (value) => {
+    var keys = Object.keys(value);
+    if (_.isBoolean(value)) return value;
+    if (value.hasOwnProperty("severity")) {
+      if (Object.keys(value).length == 1) return true;
+      var newValue = {};
+      for (var prop in value) {
+        if (prop !== "severity") newValue[prop] = value[prop];
+      }
+      return newValue;
+    }
+    return value;
+  });
 
   var fatalRules = _.keys(
     _.pickBy(config.rules, function (value) {
@@ -211,32 +211,32 @@ const apiRoute = nextConnect({
   );
 
   // const linterRules = [
-  //   require('remark-lint'),
+  //   // require("remark-lint"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#file-extension
-  //   [require('remark-lint-file-extension'), 'md'],
+  //   // [require("remark-lint-file-extension"), "md"],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#file-name
-  //   require('remark-lint-no-file-name-mixed-case'),
-  //   require('remark-lint-no-file-name-articles'),
-  //   require('remark-lint-no-file-name-irregular-characters'),
-  //   require('remark-lint-no-file-name-consecutive-dashes'),
-  //   require('remark-lint-no-file-name-outer-dashes'),
+  //   require("remark-lint-no-file-name-mixed-case"),
+  //   require("remark-lint-no-file-name-articles"),
+  //   require("remark-lint-no-file-name-irregular-characters"),
+  //   require("remark-lint-no-file-name-consecutive-dashes"),
+  //   require("remark-lint-no-file-name-outer-dashes"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#newlines
   //   // http://www.cirosantilli.com/markdown-style-guide/#empty-lines-around-lists
   //   // http://www.cirosantilli.com/markdown-style-guide/#tables
-  //   require('remark-lint-no-consecutive-blank-lines'),
+  //   require("remark-lint-no-consecutive-blank-lines"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#spaces-after-sentences.
   //   // Not enforced, cannot be done properly without false positives, if you
   //   // want this, use remark-retext and retext-sentence-spacing.
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#line-wrapping
-  //   [require('remark-lint-maximum-line-length'), 60],
+  //   [require("remark-lint-maximum-line-length"), 60],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#dollar-signs-in-shell-code
-  //   require('remark-lint-no-shell-dollars'),
+  //   require("remark-lint-no-shell-dollars"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#what-to-mark-as-code.
   //   // This is a tip, not a rule.
@@ -246,15 +246,15 @@ const apiRoute = nextConnect({
   //   // use remark-retext and retext-spell.
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#line-breaks
-  //   require('remark-lint-hard-break-spaces'),
+  //   require("remark-lint-hard-break-spaces"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#headers
-  //   [require('remark-lint-heading-style'), 'atx'],
-  //   require('remark-lint-heading-increment'),
-  //   require('remark-lint-no-duplicate-headings'),
+  //   [require("remark-lint-heading-style"), "atx"],
+  //   require("remark-lint-heading-increment"),
+  //   require("remark-lint-no-duplicate-headings"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#top-level-header
-  //   require('remark-lint-no-multiple-toplevel-headings'),
+  //   require("remark-lint-no-multiple-toplevel-headings"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#header-case.
   //   // Heading case isn’t tested yet: new rules to fix this are ok though!
@@ -263,33 +263,33 @@ const apiRoute = nextConnect({
   //   // Cannot be checked?
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#header-length
-  //   require('remark-lint-maximum-heading-length'),
+  //   require("remark-lint-maximum-heading-length"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#punctuation-at-the-end-of-headers
-  //   [require('remark-lint-no-heading-punctuation'), ':.'],
+  //   [require("remark-lint-no-heading-punctuation"), ":."],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#header-synonyms.
   //   // Cannot be checked?
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#blockquotes
-  //   [require('remark-lint-blockquote-indentation'), 2],
-  //   require('remark-lint-no-blockquote-without-marker'),
+  //   [require("remark-lint-blockquote-indentation"), 2],
+  //   require("remark-lint-no-blockquote-without-marker"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#unordered
-  //   [require('remark-lint-unordered-list-marker-style'), '-'],
+  //   [require("remark-lint-unordered-list-marker-style"), "-"],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#ordered
-  //   [require('remark-lint-ordered-list-marker-style'), '.'],
-  //   [require('remark-lint-ordered-list-marker-value'), 'one'],
+  //   [require("remark-lint-ordered-list-marker-style"), "."],
+  //   [require("remark-lint-ordered-list-marker-value"), "one"],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#spaces-after-list-marker
-  //   [require('remark-lint-list-item-indent'), 'mixed'],
+  //   [require("remark-lint-list-item-indent"), "mixed"],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#indentation-of-content-inside-lists
-  //   require('remark-lint-list-item-content-indent'),
+  //   require("remark-lint-list-item-content-indent"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#empty-lines-inside-lists
-  //   require('remark-lint-list-item-spacing'),
+  //   require("remark-lint-list-item-spacing"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#case-of-first-letter-of-list-item
   //   // Not checked.
@@ -301,57 +301,57 @@ const apiRoute = nextConnect({
   //   // Not checked.
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#code-blocks
-  //   [require('remark-lint-code-block-style'), 'fenced'],
+  //   [require("remark-lint-code-block-style"), "fenced"],
   //   [
-  //     require('remark-lint-fenced-code-flag'),
+  //     require("remark-lint-fenced-code-flag"),
   //     {
   //       allowEmpty: false,
   //     },
   //   ],
-  //   [require('remark-lint-fenced-code-marker'), '`'],
+  //   [require("remark-lint-fenced-code-marker"), "`"],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#horizontal-rules
-  //   [require('remark-lint-rule-style'), '---'],
+  //   [require("remark-lint-rule-style"), "---"],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#tables
-  //   require('remark-lint-no-table-indentation'),
-  //   require('remark-lint-table-pipes'),
-  //   require('remark-lint-table-pipe-alignment'),
-  //   [require('remark-lint-table-cell-padding'), 'padded'],
+  //   require("remark-lint-no-table-indentation"),
+  //   require("remark-lint-table-pipes"),
+  //   require("remark-lint-table-pipe-alignment"),
+  //   [require("remark-lint-table-cell-padding"), "padded"],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#separate-consecutive-elements.
   //   // Not checked.
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#span-elements
-  //   require('remark-lint-no-inline-padding'),
+  //   require("remark-lint-no-inline-padding"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#reference-style-links
-  //   require('remark-lint-no-shortcut-reference-image'),
-  //   require('remark-lint-no-shortcut-reference-link'),
-  //   require('remark-lint-final-definition'),
-  //   require('remark-lint-definition-case'),
-  //   require('remark-lint-definition-spacing'),
+  //   require("remark-lint-no-shortcut-reference-image"),
+  //   require("remark-lint-no-shortcut-reference-link"),
+  //   require("remark-lint-final-definition"),
+  //   require("remark-lint-definition-case"),
+  //   require("remark-lint-definition-spacing"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#single-or-double-quote-titles
-  //   [require('remark-lint-link-title-style'), '"'],
+  //   [require("remark-lint-link-title-style"), '"'],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#bold
-  //   [require('remark-lint-strong-marker'), '*'],
+  //   [require("remark-lint-strong-marker"), "*"],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#italic
-  //   [require('remark-lint-emphasis-marker'), '*'],
+  //   [require("remark-lint-emphasis-marker"), "*"],
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#uppercase-for-emphasis.
   //   // Not checked.
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#emphasis-vs-headers
-  //   require('remark-lint-no-emphasis-as-heading'),
+  //   require("remark-lint-no-emphasis-as-heading"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#automatic-links-without-angle-brackets
-  //   require('remark-lint-no-literal-urls'),
+  //   require("remark-lint-no-literal-urls"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#content-of-automatic-links
-  //   require('remark-lint-no-auto-link-without-protocol'),
+  //   require("remark-lint-no-auto-link-without-protocol"),
 
   //   // http://www.cirosantilli.com/markdown-style-guide/#email-automatic-links.
   //   // Not checked.)
@@ -390,108 +390,73 @@ const apiRoute = nextConnect({
   });
 
   function checkFile(filez, cb) {
-    remark()
-      // TODO: fix MD lint rules
-      // .use(remarkLint)
-      // .use(remarkValidateLinks, {})
-      .use(validateExternalLinks, {
-        skipLocalhost: true,
-        skipUrlPatterns: ["https://github.com", "//s3.amazonaws.com"],
-        gotOptions: {
-          baseUrl: "https://developer.bigcommerce.com",
-        },
-      })
-      .use(writeGood, {
-        checks: general,
-        whitelist: ignoreWords,
-      })
-      .use(writeGood, {
-        checks: dateFormat,
-        whitelist: ignoreWords,
-      })
-      .use(writeGood, {
-        checks: ellipses,
-        whitelist: ignoreWords,
-      })
-      .use(writeGood, {
-        checks: emdash,
-        whitelist: ignoreWords,
-      })
-      .use(writeGood, {
-        checks: exclamation,
-        whitelist: ignoreWords,
-      })
-      .use(writeGood, {
-        checks: firstPerson,
-        whitelist: ignoreWords,
-      })
-      .use(writeGood, {
-        checks: writeGoodExtension,
-        whitelist: ignoreWords.concat("In order to"),
-        // ignore: ignoreWords.concat(['in order to']),
-      })
-      .use(writeGood, {
-        checks: glossery,
-        whitelist: ignoreWords.concat(["as"]),
-      })
-      // TODO: consolidate some writeGood modules
-      .use(
-        remarkRetext,
-        retext() // Convert markdown to plain text
-          // TODO: configure readability thresholds to make it useful
-          .use(retextReadability, readabilityConfig || {})
-          // TODO: configure simplify to be less sensitive
-          .use(retextSimplify, {
-            ignore: ignoreWords.concat([
-              "multiple",
-              "render",
-              "forward",
-              "should",
-              "in order to",
-              "delete",
-            ]),
-          })
-          .use(retextEquality, {
-            ignore: ignoreWords.concat([
-              "just",
-              "easy",
-              "disable",
-              "disabled",
-              "host",
-            ]),
-          })
-          .use(syntaxURLS)
-          // .use(intensify, {
-          //   ignore: ignoreWords.concat([]),
-          // })
-          .use(retextRepeatedWords)
-          .use(indefiniteArticles)
-          // .use(assuming, {
-          //   ignore: ignoreWords.concat([]),
-          // })
-          // TODO: have spell not check URLS or file names
-          .use(retextSpell, {
-            dictionary: dictionary,
-            ignore: ignoreWords.concat([]),
-            ignoreLiteral: true,
-          })
-      )
-      // plugin to enable, disable, and ignore messages.
-      // .use(remarkMessageControl, {
-      //   name: 'quality-docs',
-      //   source: [
-      //     'remark-lint',
-      // 'remark-lint-write-good',
-      //     'retext-readability',
-      //     'retext-simplify',
-      //     'retext-equality',
-      //     'retext-intensify',
-      //     'retext-google-styleguide',
-      //   ],
-      // })
+    const writeGoodOptions = [
+      { checks: general },
+      { checks: dateFormat },
+      { checks: ellipses },
+      { checks: emdash },
+      { checks: exclamation },
+      { checks: firstPerson },
+      { checks: writeGoodExtension, extra: ["In order to"] },
+      { checks: glossery, extra: ["as"] },
+    ];
+
+    const retextOptions = [
+      { plugin: retextReadability, config: readabilityConfig || {} },
+      {
+        plugin: retextSimplify,
+        extra: [
+          "multiple",
+          "render",
+          "forward",
+          "should",
+          "in order to",
+          "delete",
+        ],
+      },
+      {
+        plugin: retextEquality,
+        extra: ["just", "easy", "disable", "disabled", "host"],
+      },
+      { plugin: syntaxURLS },
+      { plugin: retextRepeatedWords },
+      { plugin: indefiniteArticles },
+      {
+        plugin: retextSpell,
+        config: { dictionary: dictionary, ignoreLiteral: true },
+      },
+    ];
+
+    let remarkChain = remark().use(validateExternalLinks, {
+      skipLocalhost: true,
+      skipUrlPatterns: ["https://github.com", "//s3.amazonaws.com"],
+      gotOptions: { baseUrl: "https://developer.bigcommerce.com" },
+    });
+
+    writeGoodOptions.forEach((option) => {
+      remarkChain = remarkChain.use(writeGood, {
+        checks: option.checks,
+        whitelist: option.extra
+          ? ignoreWords.concat(option.extra)
+          : ignoreWords,
+      });
+    });
+
+    let retextChain = retext();
+    retextOptions.forEach((option) => {
+      retextChain = retextChain.use(option.plugin, {
+        ignore: option.extra ? ignoreWords.concat(option.extra) : ignoreWords,
+        ...option.config,
+      });
+    });
+
+    remarkChain
+      .use(remarkRetext, retextChain)
       .process(filez, function (err, results) {
-        var filteredMessages = [];
-        if (results !== undefined) {
+        if (err) return cb(err);
+
+        const filteredMessages = [];
+        if (results) {
           results.messages.forEach((message) => {
             var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
             var hasFatalSource = _.includes(fatalRules, message.source);
@@ -514,11 +479,142 @@ const apiRoute = nextConnect({
 
             filteredMessages.push(message);
           });
+          results.messages = filteredMessages;
         }
-        results.messages ? (results.messages = filteredMessages) : null;
         cb(null, results);
       });
   }
+
+  // function checkFile(filez, cb) {
+  //   remark()
+  //     // TODO: fix MD lint rules
+  //     // .use(remarkLint)
+  //     // .use(remarkValidateLinks, {})
+  //     .use(validateExternalLinks, {
+  //       skipLocalhost: true,
+  //       skipUrlPatterns: ["https://github.com", "//s3.amazonaws.com"],
+  //       gotOptions: {
+  //         baseUrl: "https://developer.bigcommerce.com",
+  //       },
+  //     })
+  //     .use(writeGood, {
+  //       checks: general,
+  //       whitelist: ignoreWords,
+  //     })
+  //     .use(writeGood, {
+  //       checks: dateFormat,
+  //       whitelist: ignoreWords,
+  //     })
+  //     .use(writeGood, {
+  //       checks: ellipses,
+  //       whitelist: ignoreWords,
+  //     })
+  //     .use(writeGood, {
+  //       checks: emdash,
+  //       whitelist: ignoreWords,
+  //     })
+  //     .use(writeGood, {
+  //       checks: exclamation,
+  //       whitelist: ignoreWords,
+  //     })
+  //     .use(writeGood, {
+  //       checks: firstPerson,
+  //       whitelist: ignoreWords,
+  //     })
+  //     .use(writeGood, {
+  //       checks: writeGoodExtension,
+  //       whitelist: ignoreWords.concat("In order to"),
+  //       // ignore: ignoreWords.concat(['in order to']),
+  //     })
+  //     .use(writeGood, {
+  //       checks: glossery,
+  //       whitelist: ignoreWords.concat(["as"]),
+  //     })
+  //     // TODO: consolidate some writeGood modules
+  //     .use(
+  //       remarkRetext,
+  //       retext() // Convert markdown to plain text
+  //         // TODO: configure readability thresholds to make it useful
+  //         .use(retextReadability, readabilityConfig || {})
+  //         // TODO: configure simplify to be less sensitive
+  //         .use(retextSimplify, {
+  //           ignore: ignoreWords.concat([
+  //             "multiple",
+  //             "render",
+  //             "forward",
+  //             "should",
+  //             "in order to",
+  //             "delete",
+  //           ]),
+  //         })
+  //         .use(retextEquality, {
+  //           ignore: ignoreWords.concat([
+  //             "just",
+  //             "easy",
+  //             "disable",
+  //             "disabled",
+  //             "host",
+  //           ]),
+  //         })
+  //         .use(syntaxURLS)
+  //         // .use(intensify, {
+  //         //   ignore: ignoreWords.concat([]),
+  //         // })
+  //         .use(retextRepeatedWords)
+  //         .use(indefiniteArticles)
+  //         // .use(assuming, {
+  //         //   ignore: ignoreWords.concat([]),
+  //         // })
+  //         // TODO: have spell not check URLS or file names
+  //         .use(retextSpell, {
+  //           dictionary: dictionary,
+  //           ignore: ignoreWords.concat([]),
+  //           ignoreLiteral: true,
+  //         })
+  //     )
+  //     // plugin to enable, disable, and ignore messages.
+  //     // .use(remarkMessageControl, {
+  //     //   name: 'quality-docs',
+  //     //   source: [
+  //     //     'remark-lint',
+  //     // 'remark-lint-write-good',
+  //     //     'retext-readability',
+  //     //     'retext-simplify',
+  //     //     'retext-equality',
+  //     //     'retext-intensify',
+  //     //     'retext-google-styleguide',
+  //     //   ],
+  //     // })
+  //     .process(filez, function (err, results) {
+  //       var filteredMessages = [];
+  //       if (results !== undefined) {
+  //         results.messages.forEach((message) => {
+  //           var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
+  //           var hasFatalSource = _.includes(fatalRules, message.source);
+  //           var hasSuggestedRuleId = _.includes(suggestRules, message.ruleId);
+  //           var hasSuggestedSource = _.includes(suggestRules, message.source);
+
+  //           if (suggestRules && (hasSuggestedRuleId || hasSuggestedSource)) {
+  //             message.message = message.message.replace(
+  //               /don\’t use “(.*)”/gi,
+  //               (match, word) => {
+  //                 return "Use “" + word + "” sparingly";
+  //               }
+  //             );
+  //             delete message.fatal;
+  //           }
+
+  //           if (fatalRules && (hasFatalRuleId || hasFatalSource)) {
+  //             message.fatal = true;
+  //           }
+
+  //           filteredMessages.push(message);
+  //         });
+  //       }
+  //       results.messages ? (results.messages = filteredMessages) : null;
+  //       cb(null, results);
+  //     });
+  // }
 });
 
 export default apiRoute;

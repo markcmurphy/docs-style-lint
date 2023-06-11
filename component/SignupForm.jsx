@@ -14,6 +14,7 @@ import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
 import dynamic from 'next/dynamic';
 import rehypeSanitize from 'rehype-sanitize';
 // import '@uiw/react-md-editor/markdown-editor.css';
+// import MarkdownPreview from '@uiw/react-markdown-preview';
 // import '@uiw/react-markdown-preview/markdown.css';
 
 
@@ -65,13 +66,18 @@ const override = css`
 
 // TODO: return results as table https://react-table.tanstack.com/docs/examples/basic
 
-function ListItem({ value }) {
-  console.log('🚀 ~ file: SignupForm.jsx ~ line 38 ~ ListItem ~ value', value);
+function listItem({ value }) {
   return (
-    <div className="alert alert-primary" role="alert">
-      <b>Line:</b> {value.name} <b>Message:</b> {value.message} | {value.source}
-    </div>
+    `| ${value.name} | ${value.message} | ${value.source} |`
   );
+}
+
+function sourceList(errors) {
+  let result = '';
+  for (let i = 0; i < errors.length; i++) {
+    result += `| ${errors[i].name} | ${errors[i].message} | \`${errors[i].source}\` |\n`;
+  }
+  return result;
 }
 
 function NumberList({ errors }) {
@@ -79,21 +85,27 @@ function NumberList({ errors }) {
     '🚀 ~ file: SignupForm.jsx ~ line 48 ~ NumberList ~ errors',
     errors
   );
-  // const errorMsgs = errors[0];
 
-  // const errMsgs = errorMsgs?.messages;
   const listItems = Array.isArray(errors)
-    ? errors.map((error, index) => <ListItem key={index} value={error} />)
+    ? errors.map((error, index) =>
+      listItem({ value: error })
+    )
     : null;
 
-  // return (
-  //   <ul>{listItems}</ul>
-  // );
+  console.log("🚀 ~ file: SignupForm.jsx:84 ~ NumberList ~ listItems:", listItems)
 
-  if (errors !== undefined) {
-    return <ul>{listItems}</ul>;
+  if (errors !== undefined && errors.length > 0) {
+    return (
+      <Markdown source={`
+|Name|Message|Source|
+|---|---|---|
+${sourceList(errors)}`} />
+    )
+  } else {
+    return null;
   }
 }
+
 
 const SignupForm = () => {
   const [errors, setErrors] = useState([]);
@@ -182,7 +194,7 @@ List modules here:
                 previewOptions={{
                   rehypePlugins: [[rehypeSanitize]],
                 }}
-                // className="language-markdown"
+              // className="language-markdown"
               />
 
               {/* <div style={{ paddingTop: 50 }}>
@@ -243,7 +255,7 @@ List modules here:
             {resultsFound == -1 ? (
               ''
             ) : (
-              <div style={{marginBottom:'9px', color: 'white'}}>
+              <div style={{ marginBottom: '9px', color: 'white' }}>
                 <b>Results Found: {resultsFound}</b>
               </div>
             )}
