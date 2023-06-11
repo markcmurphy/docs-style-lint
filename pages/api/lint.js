@@ -54,13 +54,11 @@ import * as emdash from "./modules/write-good/emdash.js";
 import * as exclamation from "./modules/write-good/exclamation.js";
 import * as general from "./modules/write-good/general.js";
 import * as glossery from "./modules/write-good/glossery.js";
-
 import nextConnect from "next-connect";
 import { VFile } from "vfile";
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
-    console.log("🚀 ~ file: lint.js ~ line 62 ~ onError ~ error", error);
     res
       .status(501)
       .json({ error: `Sorry something Happened! ${error.message}` });
@@ -69,51 +67,7 @@ const apiRoute = nextConnect({
     res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
   },
 }).post((req, res) => {
-  // var silent = cli.flags.silent || false;
-  // export default handler(req, res) {
-  // if (req.method === 'POST') {
-
   var silent = false;
-  // Build array of files that match input glob
-
-  // Use --config file if provided, otherwise defaults
-
-  // if (!cli.flags.config) {
-  //   config = defaultConfig;
-  // } else {
-  //   customConfig = JSON.parse(fs.readFileSync(cli.flags.config, 'utf8'));
-
-  // If --config and --ignore are specified, update the config with new ignore
-  //   if (customConfig.ignore && cli.flags.ignore) {
-  //     var isValidString = /^[ A-Za-z0-9_@./#&+-]*$/.test(cli.flags.ignore);
-  //     var isUnique = !_.includes(customConfig.ignore, cli.flags.ignore);
-  //     if (isValidString && isUnique) {
-  //       customConfig.ignore.push(cli.flags.ignore);
-  //       customConfig.ignore.sort();
-  //       fs.writeFile(
-  //         cli.flags.rules,
-  //         JSON.stringify(rules, null, 2),
-  //         function (err) {
-  //           if (err) {
-  //             return
-  //           }
-  //           console.log(
-  //             "Added '" +
-  //               cli.flags.ignore +
-  //               "' to ignore list. Don't forget to commit the changes to " +
-  //               cli.flags.config +
-  //               '.'
-  //           );
-  //         }
-  //       );
-  //     } else {
-  //       console.log(
-  //         "Could not add '" +
-  //           cli.flags.ignore +
-  //           "' to ignore list. Please add it manually."
-  //       );
-  //     }
-  //   }
 
   var config = {};
   var customConfig = {};
@@ -361,9 +315,6 @@ const apiRoute = nextConnect({
 
   var ignoreWords = _.difference(config.ignore, config.noIgnore);
 
-  // if (cli.flags.verbose) {
-  // }
-
   let fileToCheck = new VFile(req.body.toString("utf-8"));
   let docFiles = [];
   docFiles.push(fileToCheck);
@@ -379,14 +330,6 @@ const apiRoute = nextConnect({
       });
     });
     res.send(resSendArr);
-
-    // Check for errors and exit with error code if found
-    // results.forEach((result) => {
-    //   result.messages.forEach((message) => {
-    //     if (message.fatal) hasErrors = true;
-    //   });
-    // });
-    // if (hasErrors) process.exit(1);
   });
 
   function checkFile(filez, cb) {
@@ -484,137 +427,6 @@ const apiRoute = nextConnect({
         cb(null, results);
       });
   }
-
-  // function checkFile(filez, cb) {
-  //   remark()
-  //     // TODO: fix MD lint rules
-  //     // .use(remarkLint)
-  //     // .use(remarkValidateLinks, {})
-  //     .use(validateExternalLinks, {
-  //       skipLocalhost: true,
-  //       skipUrlPatterns: ["https://github.com", "//s3.amazonaws.com"],
-  //       gotOptions: {
-  //         baseUrl: "https://developer.bigcommerce.com",
-  //       },
-  //     })
-  //     .use(writeGood, {
-  //       checks: general,
-  //       whitelist: ignoreWords,
-  //     })
-  //     .use(writeGood, {
-  //       checks: dateFormat,
-  //       whitelist: ignoreWords,
-  //     })
-  //     .use(writeGood, {
-  //       checks: ellipses,
-  //       whitelist: ignoreWords,
-  //     })
-  //     .use(writeGood, {
-  //       checks: emdash,
-  //       whitelist: ignoreWords,
-  //     })
-  //     .use(writeGood, {
-  //       checks: exclamation,
-  //       whitelist: ignoreWords,
-  //     })
-  //     .use(writeGood, {
-  //       checks: firstPerson,
-  //       whitelist: ignoreWords,
-  //     })
-  //     .use(writeGood, {
-  //       checks: writeGoodExtension,
-  //       whitelist: ignoreWords.concat("In order to"),
-  //       // ignore: ignoreWords.concat(['in order to']),
-  //     })
-  //     .use(writeGood, {
-  //       checks: glossery,
-  //       whitelist: ignoreWords.concat(["as"]),
-  //     })
-  //     // TODO: consolidate some writeGood modules
-  //     .use(
-  //       remarkRetext,
-  //       retext() // Convert markdown to plain text
-  //         // TODO: configure readability thresholds to make it useful
-  //         .use(retextReadability, readabilityConfig || {})
-  //         // TODO: configure simplify to be less sensitive
-  //         .use(retextSimplify, {
-  //           ignore: ignoreWords.concat([
-  //             "multiple",
-  //             "render",
-  //             "forward",
-  //             "should",
-  //             "in order to",
-  //             "delete",
-  //           ]),
-  //         })
-  //         .use(retextEquality, {
-  //           ignore: ignoreWords.concat([
-  //             "just",
-  //             "easy",
-  //             "disable",
-  //             "disabled",
-  //             "host",
-  //           ]),
-  //         })
-  //         .use(syntaxURLS)
-  //         // .use(intensify, {
-  //         //   ignore: ignoreWords.concat([]),
-  //         // })
-  //         .use(retextRepeatedWords)
-  //         .use(indefiniteArticles)
-  //         // .use(assuming, {
-  //         //   ignore: ignoreWords.concat([]),
-  //         // })
-  //         // TODO: have spell not check URLS or file names
-  //         .use(retextSpell, {
-  //           dictionary: dictionary,
-  //           ignore: ignoreWords.concat([]),
-  //           ignoreLiteral: true,
-  //         })
-  //     )
-  //     // plugin to enable, disable, and ignore messages.
-  //     // .use(remarkMessageControl, {
-  //     //   name: 'quality-docs',
-  //     //   source: [
-  //     //     'remark-lint',
-  //     // 'remark-lint-write-good',
-  //     //     'retext-readability',
-  //     //     'retext-simplify',
-  //     //     'retext-equality',
-  //     //     'retext-intensify',
-  //     //     'retext-google-styleguide',
-  //     //   ],
-  //     // })
-  //     .process(filez, function (err, results) {
-  //       var filteredMessages = [];
-  //       if (results !== undefined) {
-  //         results.messages.forEach((message) => {
-  //           var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
-  //           var hasFatalSource = _.includes(fatalRules, message.source);
-  //           var hasSuggestedRuleId = _.includes(suggestRules, message.ruleId);
-  //           var hasSuggestedSource = _.includes(suggestRules, message.source);
-
-  //           if (suggestRules && (hasSuggestedRuleId || hasSuggestedSource)) {
-  //             message.message = message.message.replace(
-  //               /don\’t use “(.*)”/gi,
-  //               (match, word) => {
-  //                 return "Use “" + word + "” sparingly";
-  //               }
-  //             );
-  //             delete message.fatal;
-  //           }
-
-  //           if (fatalRules && (hasFatalRuleId || hasFatalSource)) {
-  //             message.fatal = true;
-  //           }
-
-  //           filteredMessages.push(message);
-  //         });
-  //       }
-  //       results.messages ? (results.messages = filteredMessages) : null;
-  //       cb(null, results);
-  //     });
-  // }
 });
 
 export default apiRoute;

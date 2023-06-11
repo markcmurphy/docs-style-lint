@@ -40,6 +40,7 @@
     "remark-preset-lint-markdown-style-guide": "^5.1.2",
     "remark-retext": "^5.0.1",
     "remark-validate-links": "^11.0.2",
+    "render-gfm": "^1.0.2",
     "retext": "^8.1.0",
     "retext-assuming": "^1.0.0",
     "retext-equality": "^6.6.0",
