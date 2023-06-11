@@ -86,6 +86,7 @@ List modules here:
               value={code}
               onChange={(code) => setCode(code)}
               height={'70%'}
+              style={{ padding: '0 20px' }}
               previewOptions={{ rehypePlugins: [[rehypeSanitize]] }}
             />
           </div>
