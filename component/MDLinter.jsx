@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { css } from '@emotion/react';
-import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
 import dynamic from 'next/dynamic';
 import rehypeSanitize from 'rehype-sanitize';
+import CodeMirror from '@uiw/react-codemirror';
+import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
+import { languages } from '@codemirror/language-data';
+import { aura } from '@uiw/codemirror-theme-aura';
 
 // Dynamic imports
-const MDEditor = dynamic(() => import('@uiw/react-md-editor').then((mod) => mod.default), { ssr: false });
 const Markdown = dynamic(() => import('@uiw/react-markdown-preview').then((mod) => mod.default), { ssr: false });
 
 // Custom hook to fetch data
@@ -64,7 +63,6 @@ List modules here:
 - [bad link](https://www.github.com/wooom/remark-dead-link)
 `);
   const [loading, setLoading] = useState(false);
-  const [resultsFound, setResultsFound] = useState(-1);
   const errors = useFetch('/api/lint', code);
 
   // Optimized list generation
@@ -72,26 +70,13 @@ List modules here:
 
   return (
     <>
-      <Formik
-        initialValues={{}}
-        onSubmit={() => {
-          setLoading(true);
-          setLoading(false);
-          setResultsFound(errors.length);
-        }}
-      >
-        <Form>
-          <div data-color-mode="dark">
-            <MDEditor
-              value={code}
-              onChange={(code) => setCode(code)}
-              height={'70%'}
-              style={{ padding: '0 20px' }}
-              previewOptions={{ rehypePlugins: [[rehypeSanitize]] }}
-            />
-          </div>
-        </Form>
-      </Formik>
+      <div data-color-mode="dark">
+        <CodeMirror value={code}
+          onChange={(code) => setCode(code)}
+          theme={aura}
+          extensions={[markdown({ base: markdownLanguage, codeLanguages: languages })]} />;
+
+      </div>
 
       <Markdown source={
         `        
