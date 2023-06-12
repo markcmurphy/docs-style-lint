@@ -9,9 +9,11 @@
   "dependencies": {
     "@codemirror/lang-markdown": "^6.1.1",
     "@codemirror/language-data": "^6.3.1",
+    "@codemirror/lint": "^6.2.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@popperjs/core": "^2.11.5",
+    "@tanstack/react-table": "^8.9.2",
     "@uiw/codemirror-theme-aura": "^4.21.2",
     "@uiw/codemirror-theme-dracula": "^4.21.2",
     "@uiw/react-codemirror": "^4.21.2",
@@ -38,6 +40,7 @@
     "react-dom": "18.0.0",
     "react-simple-code-editor": "^0.11.0",
     "react-spinners": "^0.11.0",
+    "react-table": "^7.8.0",
     "rehype-sanitize": "^5.0.1",
     "remark": "^14.0.2",
     "remark-lint-no-dead-urls": "^1.1.0",
@@ -61,6 +64,7 @@
     "to-vfile": "^7.2.3",
     "unist-util-visit": "^4.1.0",
     "vfile": "^5.3.2",
+    "vfile-location": "^5.0.0",
     "vfile-reporter": "^7.0.4",
     "write-good": "^1.0.8",
     "yup": "^0.32.11"

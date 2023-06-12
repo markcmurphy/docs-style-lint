@@ -56,6 +56,7 @@ import * as general from "./modules/write-good/general.js";
 import * as glossery from "./modules/write-good/glossery.js";
 import nextConnect from "next-connect";
 import { VFile } from "vfile";
+import { location } from "vfile-location";
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
@@ -400,6 +401,8 @@ const apiRoute = nextConnect({
 
         const filteredMessages = [];
         if (results) {
+          // console.log("🚀 ~ file: lint.js:409 ~ results:", results);
+
           results.messages.forEach((message) => {
             var hasFatalRuleId = _.includes(fatalRules, message.ruleId);
             var hasFatalSource = _.includes(fatalRules, message.source);
@@ -423,7 +426,20 @@ const apiRoute = nextConnect({
             filteredMessages.push(message);
           });
           results.messages = filteredMessages;
+
+          results.messages.forEach((result) => {
+            const place = location(filez);
+
+            // Assuming result.position.start and result.position.end are defined
+            const startOffset = place.toOffset(result.position.start);
+            const endOffset = place.toOffset(result.position.end);
+
+            // Adjust start and end positions with new points
+            result.position.start = place.toPoint(startOffset);
+            result.position.end = place.toPoint(endOffset);
+          });
         }
+
         cb(null, results);
       });
   }
